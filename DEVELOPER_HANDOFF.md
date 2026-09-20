@@ -1,12 +1,12 @@
-# Lezzetli Restaurant Website — Developer Handoff & Technical Documentation
+# Naveen's Kitchen Lezzetli Restaurant Website — Developer Handoff & Technical Documentation
 
 ---
 
 ## Section 1: Project Overview
 
 ### 1.1 Executive Summary
-* **Project Name:** Lezzetli Restaurant Website
-* **Website Purpose:** Digital storefront, brand showcase, menu discovery, table booking inquiry funnel, and online takeaway/delivery routing for Lezzetli — an authentic Middle Eastern charcoal grill and Indian/Pakistani cuisine restaurant situated at Unit 3, Limerick Lane, Newbridge, Co. Kildare, Ireland (Tel: `045 494056`).
+* **Project Name:** Naveen's Kitchen Lezzetli Restaurant Website
+* **Website Purpose:** Digital storefront, brand showcase, menu discovery, table booking inquiry funnel, and online takeaway/delivery routing for Naveen's Kitchen Lezzetli — an authentic Middle Eastern charcoal grill, Hyderabadi Dum and South Indian cuisine restaurant situated at Unit 3, Limerick Lane, Newbridge, Co. Kildare, Ireland (Tel: `045 494056`).
 * **Technology Stack:** Pure client-side static web architecture:
   * **HTML5:** Semantic markup, dialog overlays, side drawers, and interactive lists.
   * **CSS3:** Vanilla CSS with custom properties (`:root[data-theme="dark"]` and `[data-theme="light"]`), CSS Grid, Flexbox, media queries, and hardware-accelerated animations.

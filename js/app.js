@@ -1,5 +1,5 @@
 /**
- * LEZZETLI RESTAURANT — CORE APPLICATION LOGIC
+ * NAVEEN'S KITCHEN LEZZETLI RESTAURANT — CORE APPLICATION LOGIC
  * High-performance vanilla JS powering interactions, theme switching, 
  * menu filtering, external booking handoff, and live opening hour calculations.
  */
@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initModals();
   initMobileNav();
   initScrollAnimations();
+  initPageTransitions();
 });
 
 /* ==========================================================================
@@ -111,11 +112,26 @@ const MENU_ITEMS = [
     rawPrice: 13.99,
     description: 'Authentic slow-dum cooked long-grain fragrant basmati rice layered with tender saffron chicken, caramelized onions, kewra water, and whole roasted spices.',
     image: 'https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=800&q=80',
-    tags: ['Customer Favorite', 'Authentic Desi'],
+    tags: ['Customer Favorite', 'Hyderabadi Dum'],
     isSpicy: true,
     isVeg: false,
     isSignature: true,
     pairing: 'Served with cool cucumber raita & mirchi ka salan',
+    customizable: false
+  },
+  {
+    id: 'hyderabadi-mutton-biryani',
+    name: 'Royal Hyderabadi Dum Mutton Biryani',
+    category: 'biryani',
+    price: '€15.99',
+    rawPrice: 15.99,
+    description: 'Tender marinated bone-in Irish mutton slow-dum cooked in sealed handi with aged basmati, saffron, fried onions, mint, and royal Nizami spices.',
+    image: 'https://images.unsplash.com/photo-1633945274405-b6c8069047b0?auto=format&fit=crop&w=800&q=80',
+    tags: ['Chef Signature', 'Hyderabadi Dum'],
+    isSpicy: true,
+    isVeg: false,
+    isSignature: true,
+    pairing: 'Served with mirchi ka salan & cooling cucumber raita',
     customizable: false
   },
   {
@@ -329,6 +345,51 @@ const MENU_ITEMS = [
     isSignature: false,
     pairing: 'Best served with steaming Jeera Rice',
     customizable: false
+  },
+  {
+    id: 'mysore-masala-dosa',
+    name: 'Crispy Mysore Masala Dosa',
+    category: 'south-indian',
+    price: '€10.99',
+    rawPrice: 10.99,
+    description: 'Crispy golden fermented rice & lentil crepe layered with spicy red garlic-chutney and spiced potato masala, served with piping hot sambar & fresh coconut chutney.',
+    image: 'https://images.unsplash.com/photo-1589301760014-d929f3979dbc?auto=format&fit=crop&w=800&q=80',
+    tags: ['South Indian Special', 'Vegetarian'],
+    isSpicy: true,
+    isVeg: true,
+    isSignature: true,
+    pairing: 'Served with freshly ground coconut chutney & lentil sambar',
+    customizable: false
+  },
+  {
+    id: 'andhra-guntur-chicken',
+    name: 'Andhra Guntur Pepper Chicken',
+    category: 'south-indian',
+    price: '€13.99',
+    rawPrice: 13.99,
+    description: 'Succulent chicken tossed with freshly cracked black peppercorns, roasted coriander, curry leaves, and sun-dried fiery Guntur red chilies.',
+    image: 'https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?auto=format&fit=crop&w=800&q=80',
+    tags: ['Fiery South Indian', 'Customer Favorite'],
+    isSpicy: true,
+    isVeg: false,
+    isSignature: false,
+    pairing: 'Pairs perfectly with steamed basmati rice or fresh tandoori naan',
+    customizable: false
+  },
+  {
+    id: 'mangalore-ghee-roast-paneer',
+    name: 'Mangalorean Ghee Roast Paneer',
+    category: 'south-indian',
+    price: '€12.99',
+    rawPrice: 12.99,
+    description: 'Golden paneer cubes tossed in a robust reduction of whole roasted Byadgi chilies, tangy tamarind, and fragrant pure cultured desi ghee.',
+    image: 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=800&q=80',
+    tags: ['Vegetarian', 'South Indian Special'],
+    isSpicy: true,
+    isVeg: true,
+    isSignature: true,
+    pairing: 'Exceptional with hot garlic naan or steamed rice',
+    customizable: false
   }
 ];
 
@@ -391,13 +452,13 @@ function initMenuFilters() {
       return;
     }
 
-    menuGrid.innerHTML = filtered.map(item => {
+    menuGrid.innerHTML = filtered.map((item, idx) => {
       // Calculate total in cart for this dish across all variations
       const itemsForDish = Object.values(orderCart).filter(ci => ci.dishId === item.id);
       const inCartQty = itemsForDish.reduce((sum, ci) => sum + ci.qty, 0);
 
       return `
-      <article class="dish-card" data-id="${item.id}">
+      <article class="dish-card stagger-item is-revealed" data-id="${item.id}" data-stagger="${idx % 6}">
         <div class="dish-card-image">
           <img src="${item.image}" alt="${item.name}" loading="lazy" />
           <div class="dish-price-badge">${item.price}</div>
@@ -456,6 +517,11 @@ function initMenuFilters() {
 
     // Attach click listeners to new buttons & steppers
     attachDishCardListeners();
+
+    // Progressive image reveal for newly rendered dish cards
+    if (typeof initImageReveals === 'function') {
+      initImageReveals(menuGrid);
+    }
   }
 
   // Category Tab Click
@@ -495,7 +561,7 @@ function initMenuFilters() {
    ========================================================================== */
 const orderState = {
   fulfillment: 'collection', // 'collection' or 'delivery'
-  storeName: 'Lezzetli Newbridge',
+  storeName: "Naveen's Kitchen Lezzetli Newbridge",
   storeAddress: 'Unit 3, Limerick Lane, Newbridge, Co. Kildare, W12 R274',
   hasConfirmedMode: false
 };
@@ -1616,7 +1682,54 @@ function initScrollAnimations() {
     targetElements.forEach(el => el.classList.add('is-revealed'));
   }
 
-  // 2. Scroll Progress Bar & Header Elevation
+  // 2. Parallax Depth Engine (Smooth, Hardware-Accelerated via CSS Custom Properties)
+  const heroMedia = document.querySelector('.hero-media-wrapper');
+  const storyMedia = document.querySelector('.story-media-card');
+  const dineinMedia = document.querySelector('.dinein-img-card');
+  const appMedia = document.querySelector('.app-dish-accent');
+
+  function updateParallax(scrollTop) {
+    if (prefersReducedMotion) return;
+    const windowH = window.innerHeight;
+
+    // Hero media subtle downward drift
+    if (heroMedia && scrollTop < windowH * 1.3) {
+      const heroVal = Math.min(38, Math.max(-38, scrollTop * 0.075)).toFixed(1);
+      heroMedia.style.setProperty('--parallax-hero', `${heroVal}px`);
+    }
+
+    // Story section media card subtle parallax
+    if (storyMedia) {
+      const rect = storyMedia.getBoundingClientRect();
+      if (rect.top < windowH && rect.bottom > 0) {
+        const centerOffset = rect.top + rect.height / 2 - windowH / 2;
+        const storyVal = Math.min(36, Math.max(-36, -centerOffset * 0.06)).toFixed(1);
+        storyMedia.style.setProperty('--parallax-story', `${storyVal}px`);
+      }
+    }
+
+    // Dine-in media subtle parallax
+    if (dineinMedia) {
+      const rect = dineinMedia.getBoundingClientRect();
+      if (rect.top < windowH && rect.bottom > 0) {
+        const centerOffset = rect.top + rect.height / 2 - windowH / 2;
+        const dineinVal = Math.min(32, Math.max(-32, -centerOffset * 0.05)).toFixed(1);
+        dineinMedia.style.setProperty('--parallax-dinein', `${dineinVal}px`);
+      }
+    }
+
+    // App dish accent subtle float
+    if (appMedia) {
+      const rect = appMedia.getBoundingClientRect();
+      if (rect.top < windowH && rect.bottom > 0) {
+        const centerOffset = rect.top + rect.height / 2 - windowH / 2;
+        const appVal = Math.min(28, Math.max(-28, -centerOffset * 0.065)).toFixed(1);
+        appMedia.style.setProperty('--parallax-app', `${appVal}px`);
+      }
+    }
+  }
+
+  // 3. Scroll Progress Bar, Header Elevation & Parallax Tick
   const progressBar = document.getElementById('scrollProgressBar');
   const siteHeader = document.getElementById('siteHeader');
 
@@ -1642,17 +1755,27 @@ function initScrollAnimations() {
           }
         }
 
+        // Parallax updates
+        updateParallax(scrollTop);
+
         isTicking = false;
       });
       isTicking = true;
     }
   }, { passive: true });
 
-  // 3. Lazy Image Smooth Progressive Reveal
-  const lazyImages = document.querySelectorAll('img[loading="lazy"]');
+  // Initial Parallax Call
+  updateParallax(window.scrollY || 0);
+
+  // 4. Lazy Image Smooth Progressive Reveal
+  initImageReveals();
+}
+
+function initImageReveals(container = document) {
+  const lazyImages = container.querySelectorAll('img[loading="lazy"]');
   lazyImages.forEach(img => {
     img.classList.add('img-lazy-reveal');
-    if (img.complete) {
+    if (img.complete && img.naturalHeight !== 0) {
       img.classList.add('img-loaded');
     } else {
       img.addEventListener('load', () => {
@@ -1661,4 +1784,207 @@ function initScrollAnimations() {
     }
   });
 }
+
+/* ==========================================================================
+   8. PAGE-FEEL NAVIGATION & TRANSITION SYSTEM (ITEM 1)
+   Replaces continuous plain scroll with an editorial screen-to-screen page transition.
+   ========================================================================== */
+function initPageTransitions() {
+  const curtain = document.getElementById('pageTransitionCurtain');
+  const labelEl = document.getElementById('curtainSectionLabel');
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let isTransitioning = false;
+
+  const sectionNameMap = {
+    '#hero': 'Welcome',
+    '#pillars': 'Culinary Traditions',
+    '#menu': 'The Menu',
+    '#dine-in': 'Dine-In & Booking',
+    '#story': 'Our Story & Heritage',
+    '#reviews': 'Patron Reviews',
+    '#app-download': 'Mobile App',
+    '#contact': 'Visit & Hours',
+    '#visit': 'Visit & Hours'
+  };
+
+  function getSectionName(hash, linkText) {
+    if (sectionNameMap[hash]) return sectionNameMap[hash];
+    if (linkText && linkText.trim() && !linkText.includes('Explore') && linkText.length < 25) {
+      return linkText.trim();
+    }
+    const cleanId = hash.replace('#', '').replace(/-/g, ' ');
+    return cleanId.charAt(0).toUpperCase() + cleanId.slice(1);
+  }
+
+  function navigateToSection(targetHash, linkLabel, isPopState) {
+    if (!targetHash || targetHash === '#' || targetHash === '#!') return;
+    
+    // Normalize alias e.g. #visit -> #contact
+    if (targetHash === '#visit') targetHash = '#contact';
+    
+    const targetEl = document.querySelector(targetHash);
+    if (!targetEl) return;
+
+    if (isTransitioning) return;
+
+    const sectionName = linkLabel ? (sectionNameMap[targetHash] || linkLabel) : getSectionName(targetHash);
+
+    // If user prefers reduced motion, jump directly with zero transition
+    if (prefersReducedMotion || !curtain) {
+      const headerOffset = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-height')) || 80;
+      const targetPos = targetHash === '#hero' ? 0 : targetEl.getBoundingClientRect().top + window.pageYOffset - headerOffset + 4;
+      window.scrollTo({ top: Math.max(0, targetPos), behavior: 'instant' });
+      updateNavActiveStates(targetHash);
+      triggerSectionEntrance(targetEl);
+      if (!isPopState) history.pushState(null, '', targetHash);
+      return;
+    }
+
+    isTransitioning = true;
+
+    // 1. Update Curtain Title
+    if (labelEl) {
+      labelEl.innerHTML = `<span>Entering</span> <strong style="color: var(--gold-primary); font-family: var(--font-display);">${sectionName}</strong>`;
+    }
+
+    // 2. Wipe Curtain IN (covers viewport)
+    curtain.classList.remove('is-exiting');
+    curtain.classList.add('is-active');
+
+    // Close mobile drawer if open
+    const navDrawer = document.getElementById('mobileNavDrawer');
+    if (navDrawer && navDrawer.classList.contains('active')) {
+      navDrawer.classList.remove('active');
+      document.body.style.overflow = '';
+      const navToggle = document.getElementById('mobileNavToggle');
+      if (navToggle) navToggle.setAttribute('aria-expanded', 'false');
+    }
+
+    // 3. Instant Cut behind the curtain (Eliminating plain scroll drag)
+    setTimeout(() => {
+      const headerOffset = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-height')) || 80;
+      const targetPos = targetHash === '#hero' ? 0 : targetEl.getBoundingClientRect().top + window.pageYOffset - headerOffset + 4;
+
+      window.scrollTo({
+        top: Math.max(0, targetPos),
+        behavior: 'instant'
+      });
+
+      updateNavActiveStates(targetHash);
+      if (!isPopState) history.pushState(null, '', targetHash);
+
+      // 4. Wipe Curtain OUT (reveals new section as a distinct page)
+      curtain.classList.remove('is-active');
+      curtain.classList.add('is-exiting');
+
+      // 5. Animate the target section into view
+      triggerSectionEntrance(targetEl);
+
+      setTimeout(() => {
+        curtain.classList.remove('is-exiting');
+        isTransitioning = false;
+      }, 260);
+    }, 180);
+  }
+
+  function triggerSectionEntrance(targetEl) {
+    targetEl.classList.remove('page-view-enter');
+    void targetEl.offsetWidth; // trigger reflow
+    targetEl.classList.add('page-view-enter');
+
+    // Reveal children that have scroll reveal classes
+    targetEl.querySelectorAll('.reveal-on-scroll, .stagger-item').forEach(el => {
+      el.classList.add('is-revealed');
+    });
+  }
+
+  function updateNavActiveStates(activeHash) {
+    if (activeHash === '#visit') activeHash = '#contact';
+
+    // Desktop Nav
+    document.querySelectorAll('.desktop-nav .nav-link').forEach(link => {
+      const href = link.getAttribute('href');
+      if (href === activeHash) {
+        link.classList.add('active');
+      } else {
+        link.classList.remove('active');
+      }
+    });
+
+    // Drawer Nav
+    document.querySelectorAll('.drawer-menu-links .drawer-link').forEach(link => {
+      let href = link.getAttribute('href');
+      if (href === '#visit') href = '#contact';
+      if (href === activeHash) {
+        link.classList.add('active');
+      } else {
+        link.classList.remove('active');
+      }
+    });
+
+    // Mobile Dock
+    document.querySelectorAll('.mobile-bottom-dock .dock-btn').forEach(btn => {
+      const href = btn.getAttribute('href');
+      if (href === activeHash) {
+        btn.classList.add('active');
+      } else if (btn.tagName === 'A') {
+        btn.classList.remove('active');
+      }
+    });
+  }
+
+  // Intercept in-page navigation links (excluding dialog modals)
+  document.addEventListener('click', (e) => {
+    // Find closest anchor
+    const link = e.target.closest('a');
+    if (!link) return;
+
+    // Check if it's an in-page hash link
+    const href = link.getAttribute('href');
+    if (!href || !href.startsWith('#') || href === '#' || href === '#!') return;
+
+    // Ignore modal triggers that have href="#orderDrawer" or trigger dialogs
+    if (link.classList.contains('trigger-book-table') || 
+        link.classList.contains('trigger-order-now') ||
+        link.getAttribute('aria-haspopup') === 'dialog' ||
+        href === '#orderDrawer' ||
+        href === '#reservationModal') {
+      return;
+    }
+
+    const targetEl = document.querySelector(href === '#visit' ? '#contact' : href);
+    if (!targetEl) return;
+
+    // Prevent plain continuous scroll
+    e.preventDefault();
+
+    const linkText = link.textContent.trim();
+    navigateToSection(href, linkText, false);
+  });
+
+  // Handle browser back/forward buttons
+  window.addEventListener('popstate', () => {
+    const hash = window.location.hash || '#hero';
+    navigateToSection(hash, null, true);
+  });
+
+  // ScrollSpy: Update active nav links during natural mouse scroll
+  const observerSections = document.querySelectorAll('section[id]');
+  if ('IntersectionObserver' in window && observerSections.length > 0) {
+    const spyObserver = new IntersectionObserver((entries) => {
+      if (isTransitioning) return;
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          updateNavActiveStates(`#${entry.target.id}`);
+        }
+      });
+    }, {
+      threshold: 0.35,
+      rootMargin: '-80px 0px -40% 0px'
+    });
+
+    observerSections.forEach(sec => spyObserver.observe(sec));
+  }
+}
+
 

@@ -23,7 +23,7 @@ To ensure this review is grounded strictly in evidence rather than retrospective
 * **Claim: "The dark palette looks somber and like a takeaway leaflet."**  
   *Verification:* **UNSUPPORTED AS A UX PROBLEM.** The dark background (`#1A1A1A`) is standard for Flipdish’s "Boxed Up" theme. While it evokes a fast-casual takeaway feel, calling it "somber" or a "problem" is a subjective aesthetic opinion, not an objective usability failure. Text contrast against the dark background meets WCAG AA standards.
 * **Claim: "Food is 100% Halal."**  
-  *Verification:* **UNSUPPORTED INFERENCE.** Halal status is nowhere stated on the website. While common for Middle Eastern and Pakistani cuisines, asserting "Food is 100% Halal" as an established fact was an unjustified leap.
+  *Verification:* **UNSUPPORTED INFERENCE.** Halal status is nowhere stated on the website. While common for Middle Eastern and regional Indian cuisines, asserting "Food is 100% Halal" as an established fact was an unjustified leap.
 * **Claim: "New owner wants higher-margin dine-in bookings."**  
   *Verification:* **FABRICATED BUSINESS REQUIREMENT.** The project brief states only: *"The restaurant has been acquired by a new owner, who wants to improve the website experience."* Commercial prioritization between dine-in vs. takeaway was an unverified assumption.
 
@@ -176,7 +176,7 @@ Critically evaluating the problems reported in Deliverable 2 against the **Core 
 
 Within the initial 5–10 seconds of interaction, can a first-time visitor understand:
 * **What Lezzetli is?** **NO.** There is no headline stating what Lezzetli is. The user sees a logo and a free wings promo.
-* **What type of food it offers?** **MISLEADING.** The visible cards show only kebabs and wraps. The Indian/Pakistani cuisine is invisible above the fold.
+* **What type of food it offers?** **MISLEADING.** The visible cards show only kebabs and wraps. The Hyderabadi Dum & South Indian cuisine is invisible above the fold.
 * **Where it is?** **PARTIALLY.** The delivery/collect pill mentions *"Unit 3, Limerick Lane, Newbridge"*, but town context is secondary to the promo banner.
 * **What they can do on the website?** **TRANSACTIONAL ONLY.** The page screams *"Log in and order takeaway"*. It does not communicate dine-in hospitality.
 * **What the important next action is?** **AGGRESSIVE.** Pushes "Order for collection" immediately, before the user has decided if they want the food.
@@ -387,7 +387,7 @@ To maintain high professional standards, we explicitly disqualify the following 
 
 ### A. Confirmed UX Problems (Evidence-Backed)
 1. **Primary Navigation Missing Menu:** Drawer menu contains only `Home`, `Contact`, `Reservations`.
-2. **Cuisine Misrepresentation:** Preview menu shows 10 kebab/wrap items and zero Indian/Pakistani dishes.
+2. **Cuisine Misrepresentation:** Preview menu shows 10 kebab/wrap items and zero Hyderabadi Dum or South Indian dishes.
 3. **Brand Narrative Absence:** No tagline, intro copy, or explanation of the "Lezzetli / Spice Haven" identity.
 4. **Browse vs. Order Entanglement:** Users seeking to read the menu are forced into the Flipdish e-commerce checkout funnel.
 5. **Reservation Confirmation Ambiguity:** Reservation form lacks response timeframes, cancellation policy, or confirmation expectations.
@@ -433,6 +433,6 @@ To maintain high professional standards, we explicitly disqualify the following 
 We are ready to proceed to **Deliverable 4: Proposed Information Architecture (Sitemap & Navigation)** and **Deliverable 5: Key User Flows**, subject to the following strict conditions:
 
 1. **Condition 1 (IA Scope):** The new Information Architecture must accommodate both Dine-In and Takeaway without assuming one replaces or dominates the other.
-2. **Condition 2 (Menu Architecture):** The menu structure must display both Middle Eastern charcoal grills and Indian/Pakistani curries/biryanis symmetrically.
+2. **Condition 2 (Menu Architecture):** The menu structure must display both Middle Eastern charcoal grills and Hyderabadi Dum/South Indian dishes symmetrically.
 3. **Condition 3 (Fulfillment Reality):** Flipdish remains the presumed online ordering engine, and table reservations remain inquiry-based with enhanced confirmation microcopy, until the client specifies otherwise.
 4. **Condition 4 (Open Assumptions Documented):** Halal certifications, final brand naming ("Spice Haven" status), and interior seating capacity remain explicitly marked as **Unknown** in all IA deliverables until client clarification is received.

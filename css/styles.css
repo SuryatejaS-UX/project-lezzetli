@@ -1,5 +1,5 @@
 /* ==========================================================================
-   LEZZETLI RESTAURANT — DESIGN SYSTEM & MASTER STYLESHEET
+   NAVEEN'S KITCHEN LEZZETLI RESTAURANT — DESIGN SYSTEM & MASTER STYLESHEET
    Middle Eastern Charcoal Grills & Authentic Desi Cuisine (Newbridge, Ireland)
    ========================================================================== */
 
@@ -416,11 +416,12 @@ button {
 
 .brand-title {
   font-family: var(--font-display);
-  font-size: 1.35rem;
+  font-size: clamp(1.05rem, 1.35vw, 1.25rem);
   font-weight: 700;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.04em;
   color: var(--text-primary);
-  line-height: 1.1;
+  line-height: 1.15;
+  white-space: nowrap;
 }
 
 .brand-subtitle {
@@ -464,6 +465,15 @@ button {
 }
 
 .nav-link:hover::after {
+  width: 100%;
+}
+
+.nav-link.active {
+  color: var(--gold-light);
+  font-weight: 600;
+}
+
+.nav-link.active::after {
   width: 100%;
 }
 
@@ -727,7 +737,26 @@ button {
 .section {
   padding: 5.5rem 0;
   position: relative;
+  scroll-margin-top: calc(var(--header-height) + 12px);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 -14px 32px rgba(0, 0, 0, 0.3);
 }
+
+[data-theme="light"] .section {
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 -10px 24px rgba(45, 30, 15, 0.04);
+}
+
+/* Stacking Order for Subtle Sheet Elevation on Scroll */
+.hero-section { position: relative; z-index: 1; }
+#pillars { position: relative; z-index: 2; }
+#menu { position: relative; z-index: 3; }
+#dine-in { position: relative; z-index: 4; }
+#story { position: relative; z-index: 5; }
+#reviews { position: relative; z-index: 6; }
+#app-download { position: relative; z-index: 7; }
+#contact { position: relative; z-index: 8; }
+.site-footer { position: relative; z-index: 9; }
 
 .section-bg-alt {
   background-color: var(--bg-secondary);
@@ -2869,6 +2898,12 @@ html[data-theme="light"] .dish-card:hover .dish-price-badge,
   color: var(--gold-primary);
 }
 
+.drawer-link.active {
+  color: var(--gold-light);
+  padding-left: 0.5rem;
+  border-left: 3px solid var(--gold-primary);
+}
+
 .drawer-footer {
   margin-top: auto;
   padding-top: 1.5rem;
@@ -3123,47 +3158,91 @@ html[data-theme="light"] .dish-card:hover .dish-price-badge,
 
 .reveal-on-scroll {
   opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 0.75s var(--ease-luxury), transform 0.75s var(--ease-luxury);
+  transform: translateY(28px) scale(0.985);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: opacity, transform;
 }
 
 .reveal-on-scroll.is-revealed {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateY(0) scale(1);
 }
 
 .stagger-item {
   opacity: 0;
-  transform: translateY(22px);
-  transition: opacity 0.65s var(--ease-luxury), transform 0.65s var(--ease-luxury);
+  transform: translateY(26px) scale(0.98);
+  transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), 
+              transform 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.35s ease,
+              border-color 0.35s ease;
   will-change: opacity, transform;
 }
 
 .stagger-item.is-revealed {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateY(0) scale(1);
 }
 
 /* Stagger Delay Matrix for Natural Cascading */
 .stagger-item[data-stagger="0"] { transition-delay: 0ms; }
-.stagger-item[data-stagger="1"] { transition-delay: 75ms; }
-.stagger-item[data-stagger="2"] { transition-delay: 150ms; }
-.stagger-item[data-stagger="3"] { transition-delay: 225ms; }
-.stagger-item[data-stagger="4"] { transition-delay: 300ms; }
-.stagger-item[data-stagger="5"] { transition-delay: 375ms; }
+.stagger-item[data-stagger="1"] { transition-delay: 85ms; }
+.stagger-item[data-stagger="2"] { transition-delay: 170ms; }
+.stagger-item[data-stagger="3"] { transition-delay: 255ms; }
+.stagger-item[data-stagger="4"] { transition-delay: 340ms; }
+.stagger-item[data-stagger="5"] { transition-delay: 425ms; }
 
-/* Progressive Image Lazy Load Entrance */
+/* Progressive Luxury Image Scroll Entrance */
 img[loading="lazy"] {
-  transition: opacity 0.5s var(--ease-luxury), filter 0.5s var(--ease-luxury);
+  transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.95s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 0.75s ease;
+  will-change: opacity, transform, filter;
 }
 
 img.img-lazy-reveal {
-  opacity: 0;
+  opacity: 0.15;
+  filter: blur(8px);
+  transform: scale(1.06);
 }
 
 img.img-lazy-reveal.img-loaded {
   opacity: 1;
+  filter: blur(0px);
+  transform: scale(1);
+}
+
+/* Parallax Media Containers (Hardware-Accelerated Scroll Drift) */
+.hero-media-wrapper {
+  transform: translateY(var(--parallax-hero, 0px));
+  will-change: transform;
+  transition: transform 0.08s linear;
+}
+
+.story-media-card {
+  transform: translateY(var(--parallax-story, 0px));
+  will-change: transform;
+  transition: transform 0.08s linear;
+}
+
+.dinein-img-card {
+  transform: translateY(var(--parallax-dinein, 0px));
+  will-change: transform;
+  transition: transform 0.08s linear;
+}
+
+.app-dish-accent {
+  transform: translateY(var(--parallax-app, 0px));
+  will-change: transform;
+  transition: transform 0.08s linear;
+}
+
+/* Card Interactive Micro-Elevation */
+.pillar-card:hover,
+.review-card:hover,
+.visit-info-card:hover {
+  transform: translateY(-6px) scale(1.008);
+  border-color: rgba(212, 154, 61, 0.35);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.55), 0 0 20px rgba(212, 154, 61, 0.12);
 }
 
 /* ==========================================================================
@@ -4077,6 +4156,146 @@ img.img-lazy-reveal.img-loaded {
   .customizer-add-btn {
     padding: 0.75rem 1rem !important;
     font-size: 0.9rem !important;
+  }
+}
+
+/* ==========================================================================
+   23. PAGE-FEEL NAVIGATION & TRANSITION SYSTEM (ITEM 1)
+   Delivers the sensation of navigating to a new page instead of plain scroll.
+   ========================================================================== */
+.page-transition-curtain {
+  position: fixed;
+  inset: 0;
+  z-index: 100000;
+  background: radial-gradient(circle at 50% 42%, #221a14 0%, #0c0a08 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-100%);
+  transition: transform 0.22s cubic-bezier(0.77, 0, 0.175, 1),
+              opacity 0.18s ease,
+              visibility 0.22s;
+}
+
+.page-transition-curtain.is-active {
+  pointer-events: auto;
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.page-transition-curtain.is-exiting {
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(100%);
+  transition: transform 0.24s cubic-bezier(0.77, 0, 0.175, 1),
+              opacity 0.2s ease,
+              visibility 0.24s;
+}
+
+.curtain-content {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 2rem;
+  transform: scale(0.92);
+  opacity: 0;
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.18s ease;
+}
+
+.page-transition-curtain.is-active .curtain-content {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.curtain-emblem {
+  width: 54px;
+  height: 54px;
+  color: var(--gold-primary);
+  filter: drop-shadow(0 0 20px rgba(212, 154, 61, 0.6));
+  animation: curtainEmblemPulse 0.9s ease-in-out infinite alternate;
+}
+
+@keyframes curtainEmblemPulse {
+  0% { transform: scale(0.95); filter: drop-shadow(0 0 10px rgba(212, 154, 61, 0.35)); }
+  100% { transform: scale(1.05); filter: drop-shadow(0 0 24px rgba(212, 154, 61, 0.75)); }
+}
+
+.curtain-brand {
+  font-family: var(--font-display);
+  font-size: clamp(0.95rem, 2vw, 1.2rem);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gold-light);
+  font-weight: 700;
+  margin-top: 0.25rem;
+}
+
+.curtain-section-label {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.curtain-loader-bar {
+  width: 140px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 99px;
+  overflow: hidden;
+  margin-top: 0.65rem;
+  position: relative;
+}
+
+.curtain-loader-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--gold-primary), var(--gold-light));
+  border-radius: 99px;
+}
+
+.page-transition-curtain.is-active .curtain-loader-fill {
+  width: 100%;
+  transition: width 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Page Section Entrance Choreography */
+@keyframes sectionPageEntrance {
+  0% {
+    opacity: 0.15;
+    transform: translateY(24px) scale(0.995);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.page-view-enter {
+  animation: sectionPageEntrance 0.38s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Fallback for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .page-transition-curtain {
+    display: none !important;
+  }
+  .page-view-enter {
+    animation: none !important;
   }
 }
 

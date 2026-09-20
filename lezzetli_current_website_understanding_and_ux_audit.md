@@ -9,7 +9,7 @@
 
 ## 1. What Lezzetli Is
 
-Lezzetli is an established restaurant and takeaway located on Limerick Lane in Newbridge, County Kildare. It offers a distinctive culinary blend spanning **Middle Eastern charcoal grills & kebabs** alongside **authentic Pakistani & Indian cuisine** (biryanis, tandoori, curries, and freshly baked naans).
+Lezzetli is an established restaurant and takeaway located on Limerick Lane in Newbridge, County Kildare. It offers a distinctive culinary blend spanning **Middle Eastern charcoal grills & kebabs** alongside **authentic Hyderabadi Dum & South Indian cuisine** (biryanis, dosas, tandoori, curries, and freshly baked naans).
 
 *   **Geographic Context:** Situated in Newbridge town centre (near Whitewater Shopping Centre and Moorfield), serving both local residents, workers, and surrounding towns including Kildare Town and Kilcullen.
 *   **Brand Heritage & Legacy:** The existing website and signage display the brand mark **"Lezzetli"** with **"Spice Haven"** directly below the emblem, pointing to a dual brand name or previous operational identity (*"Lezzetli & Spice Haven"*).
@@ -85,7 +85,7 @@ graph TD
 ### First Impression & Above-the-Fold
 *   **Visual Dominance:** A stark dark grey/black background (`#1A1A1A`) with bright red accents. 
 *   **Hero Section:** Dominated by a large takeaway coupon banner (*"6 FREE PERI PERI WINGS WHEN YOU SPEND 30 EUROS"*) and a customer loyalty login card (*"Log in to see your previous orders, vouchers & loyalty progress"*).
-*   **Missed Proposition:** There is no brand headline (H1), no positioning statement, and no introductory summary explaining that Lezzetli is a Middle Eastern grill and Pakistani/Indian restaurant in Newbridge.
+*   **Missed Proposition:** There is no brand headline (H1), no positioning statement, and no introductory summary explaining that Lezzetli is a Middle Eastern grill and Hyderabadi/South Indian restaurant in Newbridge.
 *   **Premature Transaction:** The first interactive widget encountered is the "Deliver / Collect" fulfillment selector before the customer has even seen what food is on offer.
 
 ### Content Flow Down the Page
@@ -195,7 +195,7 @@ graph TD
 
 ## 12. Redesign Opportunities
 
-1.  **Unified Dual-Concept Positioning:** Celebrate both traditions—the smoky artistry of Middle Eastern charcoal grills alongside the deep aromatics of Pakistani & Indian curries and biryanis.
+1.  **Unified Dual-Concept Positioning:** Celebrate both traditions—the smoky artistry of Middle Eastern charcoal grills alongside the deep aromatics of royal Hyderabadi Dum biryanis and authentic South Indian cuisine.
 2.  **Intuitive Navigation Architecture:** Clean top-level navigation:
     *   **Menu** (Categorized: Grills, Biryani & Rice, Curries & Karahi, Tandoori, Breads & Sides, Kids/Desserts)
     *   **Dine-In & Reservations** (Atmosphere, Table Bookings, Group Dining)
