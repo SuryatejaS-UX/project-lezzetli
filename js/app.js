@@ -1004,10 +1004,47 @@ function initModals() {
     panel.addEventListener('click', e => e.stopPropagation());
   });
 
-  // Mobile drawer drag handle click/tap to dismiss
+  // Mobile bottom sheet drag handle tap & swipe-down dismiss
   const dragHandles = document.querySelectorAll('.drawer-drag-handle');
   dragHandles.forEach(handle => {
+    handle.setAttribute('role', 'button');
+    handle.setAttribute('tabindex', '0');
+    handle.setAttribute('aria-label', 'Dismiss sheet');
+    handle.title = 'Tap or drag down to dismiss';
+    
+    // Tap to dismiss
     handle.addEventListener('click', () => closeAllModals());
+
+    // Keyboard dismiss
+    handle.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        closeAllModals();
+      }
+    });
+
+    // Touch swipe down gesture dismiss
+    let touchStartY = 0;
+    let touchEndY = 0;
+    handle.addEventListener('touchstart', (e) => {
+      if (e.touches && e.touches[0]) {
+        touchStartY = e.touches[0].clientY;
+      }
+    }, { passive: true });
+
+    handle.addEventListener('touchmove', (e) => {
+      if (e.touches && e.touches[0]) {
+        touchEndY = e.touches[0].clientY;
+      }
+    }, { passive: true });
+
+    handle.addEventListener('touchend', () => {
+      if (touchEndY > 0 && touchEndY - touchStartY > 35) {
+        closeAllModals();
+      }
+      touchStartY = 0;
+      touchEndY = 0;
+    });
   });
 
   // ESC key to close

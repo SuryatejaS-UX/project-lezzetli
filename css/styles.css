@@ -3906,20 +3906,52 @@ img.img-lazy-reveal.img-loaded {
     border-top-color: rgba(178, 123, 35, 0.35) !important;
   }
 
-  /* 3. Drag Handle Pill on Mobile */
-  .modal-window .drawer-drag-handle {
-    display: block !important;
-    width: 44px !important;
-    height: 5px !important;
-    border-radius: 999px !important;
-    background: rgba(255, 255, 255, 0.28) !important;
-    margin: 0.75rem auto 0.25rem !important;
-    cursor: grab !important;
-    flex-shrink: 0 !important;
+  /* 2b. Remove close icons from bottom sheets on mobile view */
+  .modal-window .modal-close-btn,
+  .cart-drawer-panel .cart-drawer-close-btn {
+    display: none !important;
   }
 
-  [data-theme="light"] .modal-window .drawer-drag-handle {
-    background: rgba(0, 0, 0, 0.18) !important;
+  /* 3. Drag Handle Pill on Mobile */
+  .modal-window .drawer-drag-handle,
+  .cart-drawer-panel .drawer-drag-handle {
+    display: block !important;
+    width: 48px !important;
+    height: 5px !important;
+    border-radius: 999px !important;
+    background: rgba(255, 255, 255, 0.35) !important;
+    margin: 0.75rem auto 0.45rem !important;
+    cursor: pointer !important;
+    flex-shrink: 0 !important;
+    position: relative !important;
+    transition: transform var(--duration-fast) ease, background var(--duration-fast) ease !important;
+  }
+
+  /* Expanded touch target for effortless touch dismissal */
+  .modal-window .drawer-drag-handle::before,
+  .cart-drawer-panel .drawer-drag-handle::before {
+    content: '' !important;
+    position: absolute !important;
+    top: -12px !important;
+    bottom: -12px !important;
+    left: -24px !important;
+    right: -24px !important;
+  }
+
+  .modal-window .drawer-drag-handle:active,
+  .cart-drawer-panel .drawer-drag-handle:active {
+    transform: scale(0.94) !important;
+    background: rgba(255, 255, 255, 0.6) !important;
+  }
+
+  [data-theme="light"] .modal-window .drawer-drag-handle,
+  [data-theme="light"] .cart-drawer-panel .drawer-drag-handle {
+    background: rgba(0, 0, 0, 0.22) !important;
+  }
+
+  [data-theme="light"] .modal-window .drawer-drag-handle:active,
+  [data-theme="light"] .cart-drawer-panel .drawer-drag-handle:active {
+    background: rgba(0, 0, 0, 0.45) !important;
   }
 
   /* 4. Service Mode Modal Mobile Polish */
@@ -3927,14 +3959,6 @@ img.img-lazy-reveal.img-loaded {
     padding: 0.5rem 1.25rem max(1.5rem, env(safe-area-inset-bottom)) 1.25rem !important;
     overflow-y: auto !important;
     -webkit-overflow-scrolling: touch !important;
-  }
-
-  .service-mode-window .modal-close-btn {
-    top: 0.85rem !important;
-    right: 1rem !important;
-    width: 34px !important;
-    height: 34px !important;
-    font-size: 0.95rem !important;
   }
 
   .service-mode-window .modal-header {
@@ -4003,15 +4027,8 @@ img.img-lazy-reveal.img-loaded {
   }
 
   .item-customizer-window .customizer-header {
-    padding: 0.65rem 3.5rem 0.65rem 1rem !important;
+    padding: 0.75rem 1rem !important;
     gap: 0.85rem !important;
-  }
-
-  .item-customizer-window #itemCustomizerCloseBtn {
-    top: 0.65rem !important;
-    right: 0.75rem !important;
-    width: 32px !important;
-    height: 32px !important;
   }
 
   .customizer-img-wrap {
