@@ -432,11 +432,11 @@ button {
 }
 
 .brand-subtitle {
-  font-family: var(--font-display);
-  font-size: 0.7rem;
+  font-family: var(--font-body); /* Outfit */
+  font-size: 0.68rem;
   color: var(--gold-primary);
   font-weight: 600;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
   line-height: 1.15;
 }
@@ -4188,9 +4188,13 @@ img.img-lazy-reveal.img-loaded {
   opacity: 0;
   visibility: hidden;
   transform: translateY(-100%);
-  transition: transform 0.22s cubic-bezier(0.77, 0, 0.175, 1),
-              opacity 0.18s ease,
-              visibility 0.22s;
+}
+
+.page-transition-curtain:not(.is-active):not(.is-exiting):not(.is-intro-load) {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-100%);
+  transition: none !important;
 }
 
 .page-transition-curtain.is-active {
@@ -4198,16 +4202,17 @@ img.img-lazy-reveal.img-loaded {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
+  transition: transform 0.22s cubic-bezier(0.77, 0, 0.175, 1),
+              opacity 0.15s ease,
+              visibility 0.22s;
 }
 
 .page-transition-curtain.is-exiting {
   pointer-events: none;
-  opacity: 0;
-  visibility: hidden;
+  opacity: 1;
+  visibility: visible;
   transform: translateY(100%);
-  transition: transform 0.24s cubic-bezier(0.77, 0, 0.175, 1),
-              opacity 0.2s ease,
-              visibility 0.24s;
+  transition: transform 0.28s cubic-bezier(0.77, 0, 0.175, 1);
 }
 
 .curtain-content {
@@ -4242,39 +4247,48 @@ img.img-lazy-reveal.img-loaded {
 
 .curtain-brand {
   font-family: var(--font-display);
-  font-size: clamp(0.92rem, 2vw, 1.15rem);
-  letter-spacing: 0.1em;
+  font-size: clamp(0.95rem, 2vw, 1.2rem);
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--text-primary);
+  color: #FFFFFF !important; /* Brilliantly legible pure ivory on dark curtain in BOTH light and dark modes */
   font-weight: 700;
   margin-top: 0.25rem;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
 }
 
 .curtain-subbrand {
-  font-family: var(--font-display);
-  font-size: clamp(0.7rem, 1.5vw, 0.8rem);
-  letter-spacing: 0.22em;
+  font-family: var(--font-body) !important; /* Outfit */
+  font-size: clamp(0.72rem, 1.5vw, 0.82rem);
+  letter-spacing: 0.24em;
   text-transform: uppercase;
-  color: var(--gold-primary);
+  color: var(--gold-primary) !important;
   font-weight: 600;
   line-height: 1.2;
 }
 
 .curtain-section-label {
-  font-family: var(--font-body);
+  font-family: var(--font-body); /* Outfit */
   font-size: 0.85rem;
   text-transform: uppercase;
   letter-spacing: 0.18em;
-  color: var(--text-secondary);
+  color: rgba(245, 245, 240, 0.8) !important; /* High contrast ivory stone, legible in all themes */
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
 
+.curtain-section-label span {
+  color: rgba(245, 245, 240, 0.8) !important;
+}
+
+.curtain-section-label strong {
+  color: var(--gold-primary) !important;
+}
+
 .curtain-loader-bar {
   width: 140px;
   height: 2px;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.18);
   border-radius: 99px;
   overflow: hidden;
   margin-top: 0.65rem;
@@ -4294,6 +4308,31 @@ img.img-lazy-reveal.img-loaded {
 .page-transition-curtain.is-active .curtain-loader-fill {
   width: 100%;
   transition: width 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Initial Load State - Curtain Stacking Intro Preloader */
+.page-transition-curtain.is-intro-load:not(.is-exiting) {
+  transform: translateY(0);
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: none; /* Instant appearance on page load with zero jitter */
+}
+
+.page-transition-curtain.is-intro-load:not(.is-exiting) .curtain-content {
+  transform: scale(1);
+  opacity: 1;
+  transition: none;
+}
+
+.page-transition-curtain.is-intro-load .curtain-loader-fill {
+  width: 0%;
+  transition: none;
+}
+
+.page-transition-curtain.is-intro-load.is-animating-fill .curtain-loader-fill {
+  width: 100%;
+  transition: width 0.7s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* Page Section Entrance Choreography */

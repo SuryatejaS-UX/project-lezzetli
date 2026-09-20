@@ -31,7 +31,7 @@
   <!-- ========================================================================
        CINEMATIC PAGE TRANSITION CURTAIN (SCREEN-TO-SCREEN NAVIGATION SYSTEM)
        ======================================================================== -->
-  <div class="page-transition-curtain" id="pageTransitionCurtain" aria-hidden="true">
+  <div class="page-transition-curtain is-active is-intro-load" id="pageTransitionCurtain" aria-hidden="true">
     <div class="curtain-content">
       <div class="curtain-emblem">
         <svg viewBox="0 0 24 24" fill="currentColor">
@@ -43,7 +43,9 @@
       </div>
       <div class="curtain-brand">NAVEEN’S KITCHEN</div>
       <div class="curtain-subbrand">LEZZETLI</div>
-      <div class="curtain-section-label" id="curtainSectionLabel">Entering...</div>
+      <div class="curtain-section-label" id="curtainSectionLabel">
+        <span>Welcome to</span> <strong style="color: var(--gold-primary); font-family: var(--font-display);">Charcoal & Spice Haven</strong>
+      </div>
       <div class="curtain-loader-bar">
         <div class="curtain-loader-fill"></div>
       </div>

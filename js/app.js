@@ -1985,6 +1985,59 @@ function initPageTransitions() {
 
     observerSections.forEach(sec => spyObserver.observe(sec));
   }
+
+  // 9. Initial Curtain Loading Sequence on Page Load / Visit
+  function playInitialIntroLoad() {
+    if (prefersReducedMotion || !curtain) {
+      if (curtain) curtain.classList.remove('is-active', 'is-intro-load', 'is-animating-fill');
+      return;
+    }
+
+    isTransitioning = true;
+
+    // Check if the user landed on a deep-link hash (e.g. #menu or #contact)
+    const currentHash = window.location.hash;
+    const isDeepLink = currentHash && currentHash !== '#' && currentHash !== '#hero' && document.querySelector(currentHash === '#visit' ? '#contact' : currentHash);
+
+    if (isDeepLink && labelEl) {
+      const targetHash = currentHash === '#visit' ? '#contact' : currentHash;
+      labelEl.innerHTML = `<span>Entering</span> <strong style="color: var(--gold-primary); font-family: var(--font-display);">${getSectionName(targetHash)}</strong>`;
+    }
+
+    // Trigger smooth gold progress fill bar
+    requestAnimationFrame(() => {
+      curtain.classList.add('is-animating-fill');
+    });
+
+    // Snappy luxury intro duration (~720ms - 750ms)
+    setTimeout(() => {
+      curtain.classList.remove('is-active', 'is-intro-load');
+      curtain.classList.add('is-exiting');
+
+      if (isDeepLink) {
+        const targetHash = currentHash === '#visit' ? '#contact' : currentHash;
+        const targetEl = document.querySelector(targetHash);
+        const headerOffset = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-height')) || 80;
+        const targetPos = targetEl.getBoundingClientRect().top + window.pageYOffset - headerOffset + 4;
+        window.scrollTo({ top: Math.max(0, targetPos), behavior: 'instant' });
+        updateNavActiveStates(targetHash);
+        triggerSectionEntrance(targetEl);
+      } else {
+        const heroSection = document.getElementById('hero');
+        if (heroSection) {
+          triggerSectionEntrance(heroSection);
+        }
+      }
+
+      setTimeout(() => {
+        curtain.classList.remove('is-exiting', 'is-animating-fill');
+        isTransitioning = false;
+      }, 280);
+    }, 720);
+  }
+
+  playInitialIntroLoad();
 }
+
 
 
