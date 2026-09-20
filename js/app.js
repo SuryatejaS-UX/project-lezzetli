@@ -1005,10 +1005,10 @@ function initModals() {
   });
 
   // Mobile drawer drag handle click/tap to dismiss
-  const dragHandle = document.querySelector('.drawer-drag-handle');
-  if (dragHandle) {
-    dragHandle.addEventListener('click', () => closeAllModals());
-  }
+  const dragHandles = document.querySelectorAll('.drawer-drag-handle');
+  dragHandles.forEach(handle => {
+    handle.addEventListener('click', () => closeAllModals());
+  });
 
   // ESC key to close
   window.addEventListener('keydown', (e) => {

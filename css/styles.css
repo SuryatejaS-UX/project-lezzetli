@@ -3860,4 +3860,207 @@ img.img-lazy-reveal.img-loaded {
   background: rgba(138, 90, 20, 0.08);
 }
 
+/* ==========================================================================
+   22. RESPONSIVE MOBILE BOTTOM SHEETS (ALL MODALS ON MOBILE RESOLUTION)
+   ========================================================================== */
+@media (max-width: 768px) {
+  /* 1. Backdrop pins modal sheet flush to bottom */
+  .modal-backdrop {
+    align-items: flex-end !important;
+    justify-content: center !important;
+    padding: 0 !important;
+  }
+
+  /* 2. Unified Native Bottom Sheet Windows */
+  .modal-window,
+  .service-mode-window,
+  .item-customizer-window {
+    width: 100% !important;
+    max-width: 100% !important;
+    max-height: 88vh !important;
+    height: auto !important;
+    margin: 0 !important;
+    border-left: none !important;
+    border-right: none !important;
+    border-bottom: none !important;
+    border-top: 1.5px solid var(--gold-border) !important;
+    border-radius: 24px 24px 0 0 !important;
+    box-shadow: 0 -12px 45px rgba(0, 0, 0, 0.75) !important;
+    transform: translateY(100%) scale(1) !important;
+    transition: transform 0.38s cubic-bezier(0.22, 1, 0.36, 1) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+  }
+
+  .modal-backdrop.active .modal-window,
+  .modal-backdrop.active .service-mode-window,
+  .modal-backdrop.active .item-customizer-window {
+    transform: translateY(0) scale(1) !important;
+  }
+
+  [data-theme="light"] .modal-window,
+  [data-theme="light"] .service-mode-window,
+  [data-theme="light"] .item-customizer-window {
+    box-shadow: 0 -10px 35px rgba(45, 30, 15, 0.16) !important;
+    border-top-color: rgba(178, 123, 35, 0.35) !important;
+  }
+
+  /* 3. Drag Handle Pill on Mobile */
+  .modal-window .drawer-drag-handle {
+    display: block !important;
+    width: 44px !important;
+    height: 5px !important;
+    border-radius: 999px !important;
+    background: rgba(255, 255, 255, 0.28) !important;
+    margin: 0.75rem auto 0.25rem !important;
+    cursor: grab !important;
+    flex-shrink: 0 !important;
+  }
+
+  [data-theme="light"] .modal-window .drawer-drag-handle {
+    background: rgba(0, 0, 0, 0.18) !important;
+  }
+
+  /* 4. Service Mode Modal Mobile Polish */
+  .service-mode-window {
+    padding: 0.5rem 1.25rem max(1.5rem, env(safe-area-inset-bottom)) 1.25rem !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  .service-mode-window .modal-close-btn {
+    top: 0.85rem !important;
+    right: 1rem !important;
+    width: 34px !important;
+    height: 34px !important;
+    font-size: 0.95rem !important;
+  }
+
+  .service-mode-window .modal-header {
+    margin-bottom: 1.15rem !important;
+    padding-top: 0.15rem !important;
+  }
+
+  .service-mode-window .modal-header h3 {
+    font-size: 1.25rem !important;
+    margin-bottom: 0.25rem !important;
+  }
+
+  .service-mode-window .modal-header p {
+    font-size: 0.8125rem !important;
+    line-height: 1.35 !important;
+  }
+
+  .service-mode-options {
+    gap: 0.75rem !important;
+    margin-top: 0.85rem !important;
+  }
+
+  .service-option-card {
+    padding: 0.95rem 0.95rem !important;
+    gap: 0.85rem !important;
+    border-radius: var(--radius-md) !important;
+  }
+
+  .service-option-icon {
+    width: 42px !important;
+    height: 42px !important;
+  }
+
+  .service-option-title-row h4 {
+    font-size: 1.05rem !important;
+  }
+
+  .service-store-name {
+    font-size: 0.8125rem !important;
+  }
+
+  .service-store-addr {
+    font-size: 0.74rem !important;
+    margin-bottom: 0.4rem !important;
+  }
+
+  .service-time-pill {
+    font-size: 0.7rem !important;
+    padding: 0.15rem 0.5rem !important;
+  }
+
+  .service-mode-window .modal-actions {
+    margin-top: 1.15rem !important;
+  }
+
+  #btnConfirmServiceMode {
+    padding: 0.85rem !important;
+    font-size: 0.925rem !important;
+  }
+
+  /* 5. Item Customizer Modal Mobile Polish */
+  .item-customizer-window {
+    max-height: 90vh !important;
+    height: 90vh !important;
+    padding: 0 !important;
+  }
+
+  .item-customizer-window .customizer-header {
+    padding: 0.65rem 3.5rem 0.65rem 1rem !important;
+    gap: 0.85rem !important;
+  }
+
+  .item-customizer-window #itemCustomizerCloseBtn {
+    top: 0.65rem !important;
+    right: 0.75rem !important;
+    width: 32px !important;
+    height: 32px !important;
+  }
+
+  .customizer-img-wrap {
+    width: 58px !important;
+    height: 58px !important;
+    border-radius: 10px !important;
+  }
+
+  .customizer-title-row h3 {
+    font-size: 1.05rem !important;
+  }
+
+  .customizer-desc {
+    font-size: 0.75rem !important;
+    -webkit-line-clamp: 2 !important;
+  }
+
+  .customizer-body {
+    padding: 0.95rem 1.15rem !important;
+    flex: 1 1 auto !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  .modifier-group {
+    margin-bottom: 1.25rem !important;
+  }
+
+  .modifier-options-grid {
+    grid-template-columns: 1fr !important;
+    gap: 0.55rem !important;
+  }
+
+  .customizer-footer {
+    padding: 0.75rem 1.15rem max(1.15rem, env(safe-area-inset-bottom)) 1.15rem !important;
+    position: sticky !important;
+    bottom: 0 !important;
+    z-index: 15 !important;
+    background: var(--bg-card) !important;
+  }
+
+  [data-theme="light"] .customizer-footer {
+    background: #FFFFFF !important;
+  }
+
+  .customizer-add-btn {
+    padding: 0.75rem 1rem !important;
+    font-size: 0.9rem !important;
+  }
+}
+
 
