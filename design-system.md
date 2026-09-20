@@ -3,8 +3,6 @@
 **Product Name:** Lezzetli — Authentic Middle Eastern Charcoal Grills & Desi Cuisine  
 **Physical Restaurant:** Unit 3, Limerick Lane, Newbridge, Co. Kildare, Ireland (045 494056)  
 **Online Platform:** Interactive Single-Page Application (HTML5, Vanilla CSS3, Vanilla ES6+ JavaScript)  
-**Production URL:** `https://project-lezzetli-git-main-surya-fab2.vercel.app`  
-**GitHub Repository:** `https://github.com/SuryatejaS-UX/project-lezzetli.git`  
 **Design Version:** 2.5 (High-Contrast AAA Light Mode, Native Mobile Bottom Sheets, Gesture Dismiss)
 
 ---
@@ -24,7 +22,7 @@ Lezzetli bridges centuries-old Mughal and Ottoman hospitality with contemporary 
 
 ## 2. Design Tokens & CSS Variables
 
-All tokens are defined in [`css/styles.css`](file:///c:/Users/Surya%20Teja%20S/OneDrive/Documents/Projects/project%20lezzetli/css/styles.css) on `:root[data-theme="dark"]` and `[data-theme="light"]`.
+All tokens are defined in `css/styles.css` on `:root[data-theme="dark"]` and `[data-theme="light"]`.
 
 ### 2.1 Color Tokens
 
@@ -306,7 +304,7 @@ On mobile (`@media (max-width: 640px)`), every modal window transitions into a b
 
 ### 4.4 Dismissal Gestures in JavaScript
 
-In [`js/app.js`](file:///c:/Users/Surya%20Teja%20S/OneDrive/Documents/Projects/project%20lezzetli/js/app.js), bottom sheets support 4 simultaneous dismissal methods:
+In `js/app.js`, bottom sheets support 4 simultaneous dismissal methods:
 
 1. **Handle Tap:** Clicking/tapping `.drawer-drag-handle` calls `closeAllModals()`.
 2. **Touch Swipe-Down:** Swiping down by `> 35px` on the handle triggers `closeAllModals()`.
@@ -440,9 +438,9 @@ Replaces legacy external redirect dialogs with an integrated reservation form:
 
 - **Platform:** Vercel (Hobby Tier).
 - **Trigger:** Automated on `git push origin main`.
-- **Git Author Requirement:** Commits must be authored by the verified repository owner:
+- **Git Author Requirement:** Commits must be authored with a verified email matching the repository owner:
   ```bash
-  git config user.name "SuryatejaS-UX"
-  git config user.email "suryateja.shankapally@gmail.com"
+  git config user.name "<your-github-username>"
+  git config user.email "<your-verified-github-email>"
   ```
 - **Local Testing:** Open `index.html` directly in browser or run `npx serve ./` on port 3000.
