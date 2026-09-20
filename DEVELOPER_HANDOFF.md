@@ -6,98 +6,104 @@
 
 ### 1.1 Executive Summary
 * **Project Name:** Lezzetli Restaurant Website
-* **Website Purpose:** Culinary discovery, presentation, table reservation requests, and online ordering funnel for an authentic Middle Eastern charcoal grill and Indian/Pakistani cuisine restaurant located in Newbridge, Co. Kildare, Ireland.
-* **Technology Stack:** Pure client-side static web application:
-  * **HTML5:** Semantic markup, micro-interactions, modal dialogs, and drawer panels.
-  * **CSS3:** Vanilla CSS with custom properties (`:root[data-theme="dark"]` / `[data-theme="light"]`), CSS Grid, Flexbox, media queries, and animations.
-  * **JavaScript:** Vanilla ES6+ (no frameworks, no bundlers, no third-party runtime libraries).
-  * **Typography:** Google Fonts (`Cinzel`, `Playfair Display`, `Outfit`, `Plus Jakarta Sans`).
-  * **External Media:** Unsplash CDN photography for dish imagery and ambient hero backgrounds.
-* **Project Type:** Single-Page Application (SPA) structured as a continuous scrolling portal with modal overlays and slide-over / bottom-sheet drawers.
-* **Hosting & Deployment:** Static hosting on Vercel with automated CI/CD triggered via Git push on the `main` branch.
+* **Website Purpose:** Digital storefront, brand showcase, menu discovery, table booking inquiry funnel, and online takeaway/delivery routing for Lezzetli — an authentic Middle Eastern charcoal grill and Indian/Pakistani cuisine restaurant situated at Unit 3, Limerick Lane, Newbridge, Co. Kildare, Ireland (Tel: `045 494056`).
+* **Technology Stack:** Pure client-side static web architecture:
+  * **HTML5:** Semantic markup, dialog overlays, side drawers, and interactive lists.
+  * **CSS3:** Vanilla CSS with custom properties (`:root[data-theme="dark"]` and `[data-theme="light"]`), CSS Grid, Flexbox, media queries, and hardware-accelerated animations.
+  * **JavaScript:** Vanilla ES6+ (no frameworks, no compile steps, no runtime libraries).
+  * **Typography:** Google Fonts (`Cinzel`, `Playfair Display`, `Outfit`, `Plus Jakarta Sans`) loaded via CSS `@import`.
+  * **Media & Imagery:** Unsplash CDN photography for food presentation, hero textures, and story features.
+* **Project Architecture:** Single-Page Application (SPA) structured as a continuous vertical scroll experience complemented by modal dialogs and slide-over / bottom-sheet drawers.
+* **Hosting & CI/CD:** Hosted statically on Vercel, with automated continuous deployments triggered by Git pushes to the `main` branch.
 
-### 1.2 Current Implementation Status
+### 1.2 Implemented Feature Matrix
 
-| Status Category | Feature Description | Code Verification Status |
+| Status Category | Feature & Subsystem | Code Verification Evidence |
 | :--- | :--- | :--- |
-| **Implemented** | Dual Theme Engine (Dark Evening / Light Day mode with persistence) | **Confirmed** in `js/app.js` (`initTheme`, `applyTheme`) and `css/styles.css` |
-| **Implemented** | Dynamic Menu Filtering & Search (by category, dietary tag, and text query) | **Confirmed** in `js/app.js` (`initMenuFilters`, `renderMenu`) |
-| **Implemented** | Item Customizer System (Salad choices, house sauces, paid add-ons, quantity stepper) | **Confirmed** in `js/app.js` (`openCustomizer`, `initCustomizerEvents`) |
-| **Implemented** | Multi-Item Order Bag & Cart Calculations (Subtotal, 10% promo discount, delivery & service fees) | **Confirmed** in `js/app.js` (`orderCart`, `syncCartUI`, `renderOrderModalCart`) |
-| **Implemented** | Service Mode Selector (Collection 15-20 min vs Delivery 35-45 min) | **Confirmed** in `js/app.js` (`initServiceModeModal`, `orderState`) |
-| **Implemented** | Flipdish Checkout Routing (Automated redirect to collection/delivery endpoints) | **Confirmed** in `js/app.js` (lines 1244–1254) |
-| **Implemented** | Mobile Bottom Sheet Architecture & Touch Drag Handle Gestures | **Confirmed** in `css/styles.css` (`@media (max-width: 640px)`) and `js/app.js` |
-| **Implemented** | Dine-In Table Reservation Drawer (Slide-over desktop / bottom sheet mobile) | **Confirmed** in `index.html` (`#reservationModal`) and `css/styles.css` |
-| **Implemented** | Persistent Floating Order Summary Tray (Docked subtotal badge) | **Confirmed** in `index.html` (`#floatingOrderTray`) and `css/styles.css` |
-| **Partially Implemented** | Table Booking Submission | Form validates in browser, triggers toast confirmation, and resets, but **does not send payload to a live backend API or table management system**. Host telephone fallback (`tel:045494056`) is provided. |
-| **Partially Implemented** | Social Links & Store App Store Links | Social buttons link to root domains (`facebook.com`, `instagram.com`, `tripadvisor.com`) rather than branded restaurant profiles. App store badges use `#` anchors. |
-| **Not Implemented** | Native Payment Gateway / Card Processing | Payments are **not handled in this codebase**. The order bag transitions customers to Flipdish (`https://www.lezzetli.ie/order#/restaurant/40933/...`) for checkout and payment. |
-| **Not Implemented** | Server-Side User Accounts / Database Storage | No backend database exists; customer cart and theme state persist exclusively in browser `localStorage` and runtime memory. |
+| **Implemented** | **Dual Theme Engine:** Dark Mode (Evening Charcoal & Embers) and Light Mode (Day Dining Ivory/Cream) with `localStorage` persistence and live icon updates. | Verified in `js/app.js` (`initTheme`, `applyTheme`) and `css/styles.css` (lines 10–120). |
+| **Implemented** | **Dynamic Menu Catalog & Filtering:** Filter by 6 food categories, 4 dietary tags (All, Veg, Spicy, Halal), and real-time live keyword search. | Verified in `js/app.js` (`initMenuFilters`, `renderMenu`) and `index.html` (`#menuGrid`). |
+| **Implemented** | **Item Customizer System:** Multi-select salads (max 4), required single-select house sauce, paid add-on modifiers, real-time total updates, and quantity stepper. | Verified in `index.html` (`#itemCustomizerModal`), `css/styles.css` (lines 3540–3850), and `js/app.js` (`openCustomizer`). |
+| **Implemented** | **Multi-Item Order Bag & Cart Engine:** Line item modifier hashing, quantity adjustment, item removal, coupon engine (`LEZZETLI10` for 10% off), delivery fee calculation, and packaging fee. | Verified in `js/app.js` (`orderCart`, `syncCartUI`, `renderOrderModalCart`). |
+| **Implemented** | **Service Mode Selector:** Modal choosing between Collection (15–20 min) and Home Delivery (35–45 min), synchronizing global `orderState`. | Verified in `index.html` (`#serviceModeModal`) and `js/app.js` (`initServiceModeModal`). |
+| **Implemented** | **Flipdish Checkout Handoff:** Automatic routing from the order drawer to verified collection or delivery checkout endpoints on Flipdish in a new browser tab. | Verified in `js/app.js` (lines 1244–1254). |
+| **Implemented** | **Mobile-Native Bottom Sheets & Gesture Dismissal:** On screens `<= 640px`, all modals and drawers convert into bottom sheets; close buttons are hidden; 48×5px grab handle supports tap dismiss and touch swipe-down dismiss (`> 35px` delta). | Verified in `css/styles.css` (`@media (max-width: 640px)`) and `js/app.js` (lines 1007–1045). |
+| **Implemented** | **Dine-In Table Reservation Drawer:** Slide-over drawer on desktop (500px) and bottom sheet on mobile, with party size, date picker, time slot selector, contact inputs, and direct host telephone callout. | Verified in `index.html` (`#reservationModal`) and `css/styles.css` (lines 2486–2520). |
+| **Implemented** | **Persistent Floating Order Summary Tray:** Fixed floating pill displaying item count, subtotal, and "View Bag" CTA that appears when cart count > 0. | Verified in `index.html` (`#floatingOrderTray`) and `css/styles.css` (lines 2688–2799). |
+| **Implemented** | **Scroll Depth Progress Bar:** Fixed 3px gold bar at the top of the viewport tracking scroll progress. | Verified in `index.html` (`#scrollProgressBar`) and `js/app.js` (`initScrollAnimations`). |
+| **Partially Implemented** | **Table Booking Submission:** Form validates inputs, triggers a confirmation toast, and resets fields, but **does not post to an automated backend database or table booking API**. Provides direct phone fallback (`tel:045494056`). | Verified in `js/app.js` (lines 1060–1075). |
+| **Partially Implemented** | **Social & App Store Links:** Footer social icons link to root provider domains (`facebook.com`, `instagram.com`, `tripadvisor.com`). Mobile app store download buttons in `#app-download` use placeholder `#` anchors. | Verified in `index.html` (lines 790–798, 625–645). |
+| **Not Implemented** | **Native Payment Gateway / Credit Card Processing:** No credit card inputs or Stripe/PayPal SDKs exist in this codebase. Financial transactions are delegated to **Flipdish**. | Verified by absence of payment tokens or card fields. |
+| **Not Implemented** | **User Accounts / Customer Authentication:** No login, password, or profile databases exist. State is strictly held in client `localStorage` and memory. | Verified by codebase architecture. |
 
 ---
 
 ## Section 2: Project File & Folder Structure
 
-### 2.1 File & Directory Map
+### 2.1 File System Map
 
 ```
 project-lezzetli/
-├── .gitignore                                              # Git ignore rules (OS files, cache)
-├── index.html                                              # Master single-page markup & modal dialogs
+├── .gitignore                                              # Version control exclusion list
+├── index.html                                              # Master single-page DOM, modals, and drawers
 ├── css/
-│   └── styles.css                                          # Master stylesheet, design tokens, media queries
+│   └── styles.css                                          # Design tokens, utility classes, components, media queries
 ├── js/
-│   └── app.js                                              # Core application logic, menu dataset, cart engine
-├── design-system.md                                        # Design system & token specifications
-├── validation.md                                           # UX validation matrix & heuristic audit
-├── lezzetli_current_website_understanding_and_ux_audit.md  # Original site benchmark & requirement analysis
+│   └── app.js                                              # Application logic, menu dataset, cart engine, event handlers
+├── design-system.md                                        # Design tokens, typography scale, and styling guide
+├── DEVELOPER_HANDOFF.md                                    # This comprehensive technical handoff document
+├── validation.md                                           # UX validation matrix & audit records
+├── lezzetli_current_website_understanding_and_ux_audit.md  # Legacy site benchmark documentation
 └── exsisting Product reference files/                      # Reference PDFs and screenshots from original site
 ```
 
 ### 2.2 File Inventory & Technical Roles
 
-| File / Directory | Purpose in Project | Key Dependencies & Relationships |
-| :--- | :--- | :--- |
-| `index.html` | Defines the entire DOM hierarchy, semantic sections, meta tags, and overlay markup for all modals and drawers. | Loads `css/styles.css?v=2.5` and `js/app.js`. Interacts with Google Fonts and Google Maps iframe. |
-| `css/styles.css` | Contains all design tokens (`:root`), typography rules, layout grids, components, dark/light theme overrides, and responsive media queries. | Governs classes and IDs instantiated in `index.html` and injected dynamically by `js/app.js`. Imports Google Fonts via `@import`. |
-| `js/app.js` | Executes DOM manipulation, manages `orderState` and `orderCart`, handles modal transitions, calculates order totals, and handles gesture dismissals. | Targets element IDs in `index.html`. Relies on classes defined in `css/styles.css`. |
-| `design-system.md` | Developer guide for design tokens, typography scales, contrast ratios, and component standards. | References `css/styles.css` and `js/app.js`. |
-| `.gitignore` | Prevents operating system artifacts and temporary cache files from entering version control. | Governs Git repository behavior. |
+| File / Folder | Exact File Path | Purpose in Architecture | Key Relationships |
+| :--- | :--- | :--- | :--- |
+| `index.html` | `/index.html` | Defines the entire DOM hierarchy, semantic sections, header, navigation drawers, and modal containers. | Links to `css/styles.css?v=2.5` and `js/app.js`. Embeds Google Maps iframe. |
+| `styles.css` | `/css/styles.css` | Contains design tokens, global resets, typography definitions, component styles, theme variables, and responsive breakpoints. | Applied across `index.html`. Imports Google Fonts (`Cinzel`, `Outfit`, `Playfair Display`). |
+| `app.js` | `/js/app.js` | Manages theme switching, menu filtering, item customization, cart calculations, drawer visibility, focus trapping, and gestures. | Binds to IDs and classes in `index.html`. Manipulates classes defined in `css/styles.css`. |
+| `design-system.md` | `/design-system.md` | Architectural specification for design tokens, contrast ratios, and component rules. | Documentation reference for frontend engineers. |
+| `.gitignore` | `/.gitignore` | Specifies files ignored by Git (OS artifacts, IDE settings, temporary files). | Governs Git repository tracking. |
 
-### 2.3 How to Locate & Modify System Features
+### 2.3 How to Locate and Modify System Features
 
-* **Page Copy & Content:** Edit section containers directly in `index.html` (e.g., `#hero`, `#story`, `#dining`, `#contact`).
-* **Menu Data & Pricing:** Update the `MENU_ITEMS` array at the top of `js/app.js` (lines 82–333).
-* **Color Palette & Themes:** Adjust CSS variables under `:root` and `[data-theme="light"]` in `css/styles.css` (lines 10–120).
-* **Modal Layouts & Interactions:** Markup lives at the bottom of `index.html` (lines 850–1200); behavioral logic lives in `js/app.js` under section `4. MODALS & DRAWERS`.
-* **External Ordering Endpoints:** Modify the `flipdishUrl` assignments in `js/app.js` (lines 1246–1248).
-* **Mobile Breakpoint Styles:** Inspect the media queries at the bottom of `css/styles.css` (`@media (max-width: 640px)` around lines 3860–4084).
+* **Modifying Page Text & Content:** Open `index.html` and search for section IDs: `#hero`, `#menu`, `#story`, `#dining`, `#reviews`, `#app-download`, or `#contact`.
+* **Updating Menu Items & Prices:** Open `js/app.js` and locate `const MENU_ITEMS = [...]` (lines 82–333). Each dish is an object containing `id`, `name`, `category`, `price`, `rawPrice`, `description`, `image`, `tags`, `isVeg`, `isSpicy`, `customizable`, and modifier arrays.
+* **Modifying Colors & Brand Themes:** Open `css/styles.css` and locate lines 10–120. Edit `:root` for Dark Theme tokens or `[data-theme="light"]` for Light Theme tokens.
+* **Modifying Buttons & Styles:** Open `css/styles.css` and locate Section 5 (`BUTTONS`, lines 260–368) and Section 6 (`DISH CARD ACTIONS`, lines 1229–1330).
+* **Modifying Modal & Drawer Layouts:** Markup is located at the bottom of `index.html` (lines 850–1200). Modal logic is located in `js/app.js` under section `4. MODALS & DRAWERS`.
+* **Modifying External Ordering Endpoints:** Open `js/app.js` lines 1246–1248 inside `renderOrderModalCart()`.
+* **Adjusting Mobile Styles:** Open `css/styles.css` lines 3860–4084 (`@media (max-width: 640px)`).
 
 ---
 
 ## Section 3: Page Inventory
 
-The project implements a **Single-Page Application (SPA)** model housed entirely within `index.html`. Below is the inventory of implemented semantic sections:
+The website is a **Single-Page Application (SPA)** contained within `index.html`. All functional areas operate as anchor sections or overlay layers:
 
-| Section Anchor | Purpose | Primary User Actions | Related JS | Related CSS |
-| :--- | :--- | :--- | :--- | :--- |
-| `#hero` | Brand introduction, culinary positioning, instant ordering CTA | Click "Order Online" (opens `#serviceModeModal`), click "Book Table" (opens `#reservationModal`) | `initModals` | Lines 250–550 (`.hero-section`) |
-| `#menu` | Culinary discovery and catalog browsing across 6 food categories | Search dishes by keyword, filter by category/dietary tag, click "Customize", quick add items | `initMenuFilters`, `renderMenu`, `handleDishAction` | Lines 560–980 (`.menu-grid`, `.dish-card`) |
-| `#story` | Restaurant heritage, halal certification, charcoal roasting background | Read story, explore food photo gallery | Passive | Lines 990–1200 (`.story-section`) |
-| `#dining` | Sit-down dining ambiance, family seating information, direct booking | Click "Book a Table" (opens `#reservationModal`), click "Call Restaurant" | `initModals` | Lines 1210–1450 (`.dining-section`) |
-| `#reviews` | Social proof, verified customer dining testimonials, rating badges | Read reviews, inspect rating metrics | Passive | Lines 1460–1650 (`.reviews-grid`) |
-| `#app-download` | Promotion of mobile takeaway ordering benefits | Click store badges (placeholder `#` anchors) | Passive | Lines 1660–1780 (`.app-download-card`) |
-| `#contact` | Physical store location, verified opening hours table, Google Map embed | Click phone number (`tel:045494056`), open address in Google Maps | Passive | Lines 1790–2050 (`.contact-section`, `.hours-table`) |
-| `#serviceModeModal` | Fulfillments selector: Collection vs. Home Delivery | Choose collection or delivery card, click "Confirm & Start Order" | `initServiceModeModal` | Lines 3360–3530 & 3925–3997 |
-| `#itemCustomizerModal` | Dish modification drawer: Salads, sauces, paid add-ons, quantity | Select up to 4 salads, select 1 sauce, toggle add-ons, stepper, add to bag | `openCustomizer`, `updateCustomizerFooter` | Lines 3540–3850 & 4000–4065 |
-| `#orderDrawer` | Slide-over / bottom-sheet order bag, coupon code, order totals | Update quantity, remove item, apply coupon `LEZZETLI10`, click "Checkout" | `renderOrderModalCart`, `updateCartLineQty` | Lines 2440–2685 |
-| `#reservationModal` | Slide-over table booking drawer with guest count and date picker | Enter party size, date, time, name, phone number, click submit | Form submit listener (line 1060) | Lines 2486–2520 |
+| Section / Overlay | DOM Identifier | Primary Purpose | Primary User Interactions | JavaScript Handlers | CSS Selectors |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **Site Header** | `#siteHeader` | Branding, primary navigation, theme switching, global CTAs. | Click nav links, toggle theme, click "Order Online", click "Book Table", toggle mobile menu. | `initTheme`, `initMobileNav` | `.site-header`, `.nav-menu`, `.brand-logo` |
+| **Hero Section** | `#hero` | Brand positioning, primary value proposition, quick pillars. | Click "Order Online", click "Book a Table", read feature badges. | Event triggers (`.trigger-order-now`, `.trigger-book-table`) | `.hero-section`, `.hero-title`, `.hero-cta-group` |
+| **Menu Section** | `#menu` | Culinary discovery, category browsing, dietary filtering, keyword search, dish cards. | Click category tab, click dietary pill, type in search box, click "Customize", click quick add stepper. | `initMenuFilters`, `renderMenu`, `handleDishAction` | `.menu-section`, `.menu-categories-scroll`, `.dish-card` |
+| **Our Story** | `#story` | Restaurant heritage, culinary background, halal charcoal craft. | Passive viewing of story text and food photography. | None (static content) | `.story-section`, `.story-grid`, `.story-card` |
+| **Dine-In Hub** | `#dining` | Sit-down dining ambiance, table reservations card. | Click "Book a Table", click "Call Host". | Event triggers (`.trigger-book-table`) | `.dinein-section`, `.dinein-cta-card` |
+| **Reviews Section** | `#reviews` | Social proof, verified customer dining testimonials. | Passive viewing of customer testimonials. | None (static content) | `.reviews-section`, `.reviews-grid`, `.review-card` |
+| **App Promo** | `#app-download` | Promotional banner for takeaway mobile ordering. | Click app store badges (placeholder `#` links). | None (static content) | `.app-download-card`, `.app-badges` |
+| **Contact Section** | `#contact` | Physical address, opening hours table, Google Map embed, direct telephone calling. | Click "Open in Google Maps", click phone link `tel:045494056`. | None (native HTML links) | `.contact-section`, `.hours-table`, `.map-frame-wrapper` |
+| **Site Footer** | `.site-footer` | Brand recap, culinary links, customer service links, social links, legal notices. | Click category anchors, click social links, click allergen guide. | Allergen modal trigger (`#allergensModal`) | `.site-footer`, `.footer-top-grid`, `.footer-links` |
+| **Service Mode Modal** | `#serviceModeModal` | Choice of fulfillment method before entering checkout. | Select Collection card, select Delivery card, click "Confirm & Start Order", click drag handle to close. | `initServiceModeModal`, `openServiceModeModal` | `.service-mode-window`, `.service-option-card` |
+| **Item Customizer** | `#itemCustomizerModal` | Granular dish customization (salads, sauces, add-ons, quantity). | Check salads (max 4), select sauce radio, check add-ons, adjust quantity stepper, click "Add to Bag". | `openCustomizer`, `initCustomizerEvents` | `.item-customizer-window`, `.mod-card`, `.customizer-add-btn` |
+| **Order Bag Drawer** | `#orderDrawer` | Slide-over / bottom-sheet cart manifest, promo code input, fee breakdown, checkout routing. | Adjust item quantities, remove item, apply coupon `LEZZETLI10`, click "Checkout" (redirects to Flipdish). | `renderOrderModalCart`, `updateCartLineQty` | `.cart-drawer-panel`, `.cart-item-row`, `#btnProceedCheckout` |
+| **Table Booking Drawer**| `#reservationModal` | Slide-over / bottom-sheet reservation inquiry form. | Select party size, pick date, pick time, enter name and phone, submit form. | Form submit handler (line 1060) | `.reservation-drawer-panel`, `#externalBookingForm` |
+| **Allergens Modal** | `#allergensModal` | Complete allergen matrix and dietary safety information. | View allergen table, click drag handle / backdrop to close. | `openModal`, `closeAllModals` | `.allergens-modal-window` |
 
 ---
 
 ## Section 4: Information Architecture & Navigation
 
-### 4.1 Navigation Hierarchy
+### 4.1 Navigation Flowchart
 
 ```mermaid
 graph TD
@@ -111,9 +117,9 @@ graph TD
     A --> I["CTA: Order Online"]
     A --> J["CTA: Book Table"]
 
-    I --> K["#serviceModeModal"]
-    K --> L["#menu / #orderDrawer"]
-    L --> M["Flipdish External Checkout"]
+    I --> K["#serviceModeModal (Collect vs Deliver)"]
+    K --> L["#menu Catalog / #orderDrawer"]
+    L --> M["Flipdish External Checkout (New Tab)"]
 
     J --> N["#reservationModal (Booking Drawer)"]
     N --> O["Client Confirmation Toast + Tel Fallback"]
@@ -121,148 +127,196 @@ graph TD
 
 ### 4.2 Verified External Links Inventory
 
-| Link Label / Location | Destination URL | Purpose | Target | Verified in Code |
-| :--- | :--- | :--- | :--- | :---: |
-| **Checkout (Collection)** | `https://www.lezzetli.ie/order#/restaurant/40933/collection/68471` | Direct routing to Flipdish pickup checkout | `_blank` | **YES** (`app.js:1248`) |
-| **Checkout (Delivery)** | `https://www.lezzetli.ie/order#/restaurant/40933/delivery` | Direct routing to Flipdish delivery checkout | `_blank` | **YES** (`app.js:1247`) |
-| **Google Maps Button** | `https://maps.google.com/?q=Unit+3,+Limerick+Lane,+Newbridge,+W12+R274` | Opens restaurant coordinates in Google Maps app/browser | `_blank` | **YES** (`index.html:736`) |
-| **Google Maps Embed** | `https://www.google.com/maps/embed?pb=...` | Interactive location map iframe in Contact section | Embedded | **YES** (`index.html:750`) |
-| **Telephone Links** | `tel:045494056` | Immediate telephone dialing to the restaurant host | Native dialer | **YES** (`index.html:687`, `870`, `1073`) |
-| **Email Link** | `mailto:info@lezzetli.ie` | Default mail client trigger | Native mail | **YES** (`index.html:695`) |
-| **Social: Facebook** | `https://facebook.com` | Social presence (placeholder root domain) | `_blank` | **YES** (`index.html:790`) |
-| **Social: Instagram** | `https://instagram.com` | Social presence (placeholder root domain) | `_blank` | **YES** (`index.html:793`) |
-| **Social: TripAdvisor**| `https://tripadvisor.com` | Review presence (placeholder root domain) | `_blank` | **YES** (`index.html:796`) |
-
-> [!IMPORTANT]
-> The website does **not** link to Just Eat or Deliveroo. All takeaway e-commerce transactions are delegated strictly to **Flipdish** via `https://www.lezzetli.ie/order#/restaurant/40933/...`.
+| Anchor / Element Location | Destination URL | Purpose | Target Window | Verified in Code |
+| :--- | :--- | :--- | :---: | :---: |
+| **Order Bag: Checkout (Collection)** | `https://www.lezzetli.ie/order#/restaurant/40933/collection/68471` | Direct transition to Flipdish pickup checkout | `_blank` | **YES** (`app.js:1248`) |
+| **Order Bag: Checkout (Delivery)** | `https://www.lezzetli.ie/order#/restaurant/40933/delivery` | Direct transition to Flipdish delivery checkout | `_blank` | **YES** (`app.js:1247`) |
+| **Contact: Google Maps Directions** | `https://maps.google.com/?q=Unit+3,+Limerick+Lane,+Newbridge,+W12+R274` | Launches native Google Maps with store coordinates | `_blank` | **YES** (`index.html:736`) |
+| **Contact: Google Maps Embed Iframe** | `https://www.google.com/maps/embed?pb=...` | Interactive in-page location map | Embedded | **YES** (`index.html:750`) |
+| **Telephone Hotline (Multiple)** | `tel:045494056` | Immediate telephone dialing to host | Native dialer | **YES** (`index.html:687, 870, 1073`) |
+| **Contact Email** | `mailto:info@lezzetli.ie` | Launches user's default email client | Native mail | **YES** (`index.html:695`) |
+| **Footer: Facebook Link** | `https://facebook.com` | Social presence (generic root URL) | `_blank` | **YES** (`index.html:790`) |
+| **Footer: Instagram Link** | `https://instagram.com` | Social presence (generic root URL) | `_blank` | **YES** (`index.html:793`) |
+| **Footer: TripAdvisor Link** | `https://tripadvisor.com` | Review platform (generic root URL) | `_blank` | **YES** (`index.html:796`) |
 
 ---
 
 ## Section 5: HTML & Semantic Structure
 
 ### 5.1 Document Hierarchy & Semantics
-* `<!DOCTYPE html>` with `<html lang="en" data-theme="dark">`.
-* Single top-level `<header class="site-header">`.
-* Top-level `<main id="mainContent">` containing semantic `<section>` blocks, each paired with unique `id`, `class`, and `<div class="container">` wrappers.
-* Exactly one `<h1>` element on the entire page located in `#hero`:
+* `<!DOCTYPE html>` declaration with `<html lang="en" data-theme="dark">`.
+* Exact single `<h1>` tag in `#hero` establishing the page topic:
   ```html
   <h1 class="hero-title">
     The Royal Charcoal &amp; Authentic <span class="gold-gradient-text">Spice Haven</span>
   </h1>
   ```
-* All subheadings systematically follow a logical hierarchy: `<h2>` for section titles, `<h3>` for cards/dish names, and `<h4>` for sub-panels and modal groupings.
-* Semantic `<footer class="site-footer">` encapsulating business hours, culinary links, and copyright.
+* Strict sequential heading levels:
+  * `<h2>` for primary section titles (`.section-title` in `#menu`, `#story`, `#dining`, `#reviews`, `#contact`).
+  * `<h3>` for cards (`.dish-card-title`, `.pillar-title`, `.review-author`) and modal titles (`#resModalTitle`, `#orderModalTitle`, `#serviceModeTitle`, `#customizerItemName`).
+  * `<h4>` for subheadings, modifier group titles, and footer columns.
+* Form containers paired with `<label>` tags and explicit `for` attributes matching `<input id="...">`.
 
 ### 5.2 Technical Findings & Recommended Corrections
 
-#### Finding 1: Footer Legal Links Use Dead Anchors
+#### Finding 1: Dead Anchors in Footer Legal Links
+* **Finding:** Footer legal navigation items use `href="#"`.
 * **Evidence:** In `index.html` lines 845–848:
   ```html
   <a href="#">Privacy Policy</a>
   <a href="#">Cookie Settings</a>
   <a href="#">Terms of Service</a>
   ```
-* **Impact:** Clicking these links jumps the browser to the top of the page (`#`), breaking user context.
-* **Suggested Correction:** Create dedicated modal dialogs for Privacy and Terms, or wire them to show informational alerts until external legal policy pages are deployed.
+* **Impact:** Clicking these anchors causes the browser viewport to jump to the top of the page without displaying legal content.
+* **Suggested Correction:** Wire these anchors to trigger informational modal dialogs or link them to hosted policy documents.
 
-#### Finding 2: Missing `<label>` Elements for Stepper Buttons
-* **Evidence:** In `js/app.js` dish cards:
+#### Finding 2: Missing ARIA Labels on Dish Card Inline Stepper Buttons
+* **Finding:** Stepper minus buttons in dynamically rendered dish cards lack descriptive accessible text.
+* **Evidence:** In `js/app.js` line 640:
   ```html
-  <button type="button" class="btn-stepper-minus" data-id="sultan-kebab">−</button>
+  <button type="button" class="stepper-btn btn-stepper-minus" data-id="${item.id}">−</button>
   ```
-* **Impact:** Screen readers announce only "minus" without context on which item's quantity is being altered.
-* **Suggested Correction:** Add `aria-label="Decrease quantity for ${item.name}"` dynamically when rendering dish card HTML in `js/app.js`.
+* **Impact:** Screen readers announce only "minus" or "dash" without stating which food item will be decremented.
+* **Suggested Correction:** Update `js/app.js` to output `aria-label="Decrease quantity for ${item.name}"`.
 
 ---
 
 ## Section 6: CSS Architecture & Design Tokens
 
-### 6.1 Stylesheet Architecture
-* File location: `css/styles.css` (4,084 lines).
-* Architecture: Organized into sequential numbered sections:
-  1. Font Imports (`Cinzel`, `Outfit`, `Playfair Display`)
-  2. Design Tokens (`:root` Dark Theme / `[data-theme="light"]` Light Theme)
-  3. Reset & Base Typography
-  4. Header & Navigation
-  5. Hero Section
-  6. Menu Section & Dish Cards
-  7. Story & Dining Sections
-  8. Reviews & Testimonials
-  9. App Download & Contact Sections
-  10. Modals, Drawers & Bottom Sheets
-  11. Mobile Navigation Drawer & Bottom Dock
-  12. Media Queries (`max-width: 1024px`, `max-width: 768px`, `max-width: 640px`)
+### 6.1 Stylesheet Structure (`css/styles.css`)
+Organized into 12 distinct functional layers across 4,084 lines:
+1. Google Fonts Import (`Cinzel`, `Outfit`, `Playfair Display`)
+2. Design Tokens (`:root` Dark Theme / `[data-theme="light"]` Light Theme)
+3. CSS Reset & Typography
+4. Badges & Indicators
+5. Button Architecture & Variants
+6. Site Header & Sticky Navigation
+7. Hero Section
+8. Menu Section & Dish Cards
+9. Story, Dining & Reviews Sections
+10. Contact Section & Opening Hours Table
+11. Modals, Drawers & Bottom Sheets
+12. Responsive Media Queries (`1024px`, `768px`, `640px`)
 
 ### 6.2 Design Tokens Reference
 
 ```css
-/* Core Color Tokens */
---bg-primary: #0E0C0A;               /* Dark Base */
---bg-secondary: #171310;             /* Dark Surface */
---bg-card: rgba(30, 24, 20, 0.75);   /* Dark Card */
---gold-primary: #D49A3D;             /* Brand Saffron Gold */
---gold-hover: #E7AB4D;               /* Active Gold */
---herbal-green: #2ED573;             /* Vegetarian Indicator */
---chili-red: #FF4757;                /* Spicy Tag Indicator */
+/* ==========================================================================
+   DARK THEME TOKENS (Evening Dining — Default)
+   ========================================================================== */
+:root, [data-theme="dark"] {
+  --bg-primary: #0E0C0A;               /* Deepest Ember Charcoal */
+  --bg-secondary: #171310;             /* Warm Clove Base */
+  --bg-tertiary: #231C17;              /* Elevated Card Base */
+  --bg-card: rgba(30, 24, 20, 0.75);   /* Card Surface */
+  --bg-card-hover: rgba(40, 32, 26, 0.95);
+  --bg-glass: rgba(14, 12, 10, 0.85);  /* Frosted Glass Header/Dock */
+  --text-primary: #FBF8F3;             /* Warm Basmati Ivory */
+  --text-secondary: #C8BDB2;           /* Muted Cardamom */
+  --text-muted: #8F8377;               /* Subdued Sand */
+  --gold-primary: #D49A3D;             /* Royal Saffron Gold */
+  --gold-hover: #E7AB4D;               /* Radiant Golden Hour */
+  --gold-light: #F4C47A;               /* Light Gold */
+  --gold-subtle: rgba(212, 154, 61, 0.15);
+  --gold-border: rgba(212, 154, 61, 0.35);
+  --tandoori-accent: #C84B31;          /* Tandoori Crimson Flare */
+  --herbal-green: #2ED573;             /* Vegetarian Green */
+  --chili-red: #FF4757;                /* Spicy Red */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-pill: 999px;
+  --duration-fast: 180ms;
+  --duration-normal: 320ms;
+  --ease-luxury: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
 
-/* High-Contrast Light Mode Overrides */
+/* ==========================================================================
+   LIGHT THEME TOKENS (Day Dining — High Contrast AAA)
+   ========================================================================== */
 [data-theme="light"] {
-  --bg-primary: #FDFBF7;             /* Sandalwood Cream */
-  --bg-card: #FFFFFF;                /* Crisp White Surface */
-  --text-primary: #1C1713;           /* Dark Roasted Coffee (19.5:1 Contrast) */
-  --gold-primary: #B27B23;           /* Rich Mustard Gold */
+  --bg-primary: #FDFBF7;               /* Sandalwood Cream */
+  --bg-secondary: #F6F1E7;             /* Soft Ivory */
+  --bg-tertiary: #FAF6F0;              /* Card Elevation */
+  --bg-card: #FFFFFF;                  /* Crisp White Surfaces */
+  --text-primary: #1C1713;             /* Dark Roasted Coffee (19.5:1 Contrast) */
+  --text-secondary: #584C42;           /* Warm Earth */
+  --text-muted: #8E8175;               /* Muted Bark */
+  --gold-primary: #B27B23;             /* Rich Mustard Gold */
+  --gold-hover: #966518;               /* Burnished Brass */
+  --gold-subtle: rgba(178, 123, 35, 0.12);
+  --gold-border: rgba(178, 123, 35, 0.3);
+  --tandoori-accent: #B83B22;          /* Terracotta Red */
+  --herbal-green: #157330;             /* Forest Green */
+  --chili-red: #C0292B;                /* Chili Pepper */
 }
 ```
-
-### 6.3 Breakpoint System
-
-| Media Query | Primary Functional Adaptations |
-| :--- | :--- |
-| `@media (max-width: 1024px)` | Menu switches to 2 columns; desktop header actions condense; drawer widths adapt to `440px`. |
-| `@media (max-width: 768px)` | Main navigation collapses to mobile hamburger; bottom dock (`.mobile-bottom-dock`) activates; floating tray moves to `bottom: 84px`. |
-| `@media (max-width: 640px)` | **All modal dialogs and side drawers convert to mobile bottom sheets**. Close buttons (`.modal-close-btn`, `.cart-drawer-close-btn`) are hidden; drag handle (`.drawer-drag-handle`) is displayed; category scroll goes edge-to-edge. |
 
 ---
 
 ## Section 7: Component & Pattern Inventory
 
-### 7.1 Dish Card Component (`.dish-card`)
-* **Markup:** Rendered dynamically by `renderMenu()` in `js/app.js`.
-* **Sub-elements:**
-  * `.dish-card-media`: Enclosing image with lazy reveal (`.img-lazy-reveal`), dietary badge (`.dish-dietary-badge`), and price pill (`.dish-price-badge`).
-  * `.dish-card-body`: Title (`.dish-card-title`), description (`.dish-card-desc`), and pairing suggestion (`.dish-card-pairing`).
-  * `.dish-card-footer`: Action button. If `item.customizable === true`, renders `<button class="dish-add-btn">Customize</button>`. If item is in cart, renders inline stepper controls.
-* **Reuse:** Instantiated for all 13 items in `MENU_ITEMS`.
+### 7.1 Exhaustive Button Inventory, Variations & States
 
-### 7.2 Service Mode Selector (`#serviceModeModal`)
-* **Markup:** Static container in `index.html` (lines 961–1026).
-* **Styling:** `.modal-window.service-mode-window`.
-* **Classes:** `.service-option-card.active`, `.service-option-icon`, `.service-time-pill`.
-* **Behavior:** Radio-style selection between `#btnSelectCollect` and `#btnSelectDelivery`. Triggers `openOrderModal()` or scrolls to `#menu` on confirmation.
+The interface implements 14 distinct interactive button patterns, detailed below:
 
-### 7.3 Item Customizer Bottom Sheet (`#itemCustomizerModal`)
-* **Markup:** Lines 1030–1098 in `index.html`.
-* **Sub-elements:**
-  * `.customizer-header`: Drag handle (`.drawer-drag-handle`), dish image (`#customizerItemImage`), title (`#customizerItemName`), price (`#customizerBasePrice`).
-  * `.customizer-body`: Salad selection (`#modGroupSalads`, max 4), sauce selection (`#modGroupSauces`, required radio), add-ons (`#modGroupAddons`).
-  * `.customizer-footer`: Quantity stepper (`#customizerQtyMinus`, `#customizerQtyVal`, `#customizerQtyPlus`) and sticky button (`#customizerAddBtn`).
-* **Behavior:** Calculates real-time total as add-ons are toggled; generates composite item key for the cart.
+| Button Class / Component | HTML Element | Variant Role | Supported States | Visual Styling & Behavior |
+| :--- | :--- | :--- | :--- | :--- |
+| **`.btn.btn-gold`** | `<button>` or `<a>` | Primary Call-to-Action | `default`, `:hover`, `:active`, `:focus-visible`, `[data-theme="light"]` | **Dark:** Gold gradient (`#F4C47A` ➔ `#D49A3D`), dark text (`#110D0A`), shadow `rgba(212,154,61,0.35)`. Hover: translates `-2px`.<br>**Light:** High-contrast dark coffee background (`#1C1713`), ivory text (`#FDFBF7`), shadow `rgba(28,23,19,0.25)`. |
+| **`.btn.btn-outline-gold`** | `<button>` or `<a>` | Secondary Action | `default`, `:hover`, `:active`, `:focus-visible`, `[data-theme="light"]` | Transparent background, `1.5px solid var(--gold-primary)`. Hover: `var(--gold-subtle)` background, translates `-2px`. |
+| **`.btn.btn-tandoori`** | `<button>` or `<a>` | Accent Promotional CTA | `default`, `:hover`, `:active` | Crimson gradient (`#E05338` ➔ `#C84B31`), white text, shadow `rgba(200,75,49,0.35)`. |
+| **`.btn.btn-sm`** | Modifier | Size Variation | N/A | Reduced padding (`0.5rem 1rem`), font size `0.8125rem`. Applied to cards and contact actions. |
+| **`.btn-icon`** | `<button>` or `<a>` | Circular Icon Button | `default`, `:hover`, `:active` | `42px × 42px` circle with subtle border. Hover: gold border and gold sheen background. Used for social icons and close triggers. |
+| **`.dish-add-btn`** | `<button>` | Dish Card Action | `default`, `:hover`, `:active`, `[data-theme="light"]` | Pill capsule (`0.45rem 1rem`), gold border. Hover: fills with solid gold (`#D49A3D`), dark text (`#110D0A`), translates `-1px`. Displays "Customize" or "+ Add". |
+| **`.dish-qty-stepper`** | `<div>` (Capsule) | In-Card Stepper Container | `default`, `[data-theme="light"]` | Pill capsule housing minus button, numeric count, and plus button. Appears when dish quantity > 0. |
+| **`.stepper-btn`** | `<button>` | Stepper Increment/Decrement | `default`, `:hover`, `:active` | `26px × 26px` circle with `+` or `−`. Hover: solid gold background, scales `1.1x`. |
+| **`.category-tab-btn`** | `<button>` | Menu Category Filter Tab | `default`, `:hover`, `.active`, `:focus-visible` | Pill button with emoji icon. Default: muted text. Hover: subtle gold tint. Active: solid `1.5px solid var(--gold-primary)` border, gold text, shadow `rgba(28,23,19,0.22)`. Edge-to-edge swipe on mobile. |
+| **`.filter-pill`** | `<button>` | Dietary Filter Pill | `default`, `:hover`, `.active` | Pill with dot indicator. Default: transparent border. Active: fills with gold/green accent, highlighted text. |
+| **`.service-option-card`** | `<button>` | Service Mode Radio Card | `default`, `:hover`, `.active` | Full-width touch card with icon, store address, and time pill. Active: gold border, gold checkmark indicator (`.service-check-indicator`). |
+| **`.mod-card`** | `<label>` or `<div>` | Modifier Selection Option | `default`, `:hover`, `.selected`, `.is-radio` | Modifier pill with label, price, and icon (square for checkbox, round for radio). Selected: gold border, subtle gold tint, highlighted checkmark. |
+| **`.tray-btn`** | `<a>` | Floating Cart Action | `default`, `:hover`, `:active` | Gold gradient pill with "View Bag" text and arrow. Hover: scales `1.02x`. |
+| **`.dock-btn`** | `<button>` or `<a>` | Mobile Navigation Tab | `default`, `:hover`, `.active` | Fixed bottom dock item with SVG icon and caption. Active: gold icon and text. Features absolute badge (`.dock-cart-badge`). |
+| **`.modal-close-btn`** | `<button>` | Desktop Dialog Dismiss | `default`, `:hover`, Mobile (`<=640px`) | `36px × 36px` circle with `✕`. Hover: scales `1.05x`, gold border.<br>**Mobile (`<= 640px`):** **`display: none !important;`** |
+| **`.drawer-drag-handle`** | `<div>` (`role="button"`) | Mobile Bottom Sheet Dismiss | `default`, `:active`, Touch Swipe | `48px × 5px` pill with `border-radius: 999px`. Active: scales `0.94x`. Supports tap dismiss and touch swipe-down dismiss (`> 35px`). |
 
-### 7.4 Cart & Order Bag Drawer (`#orderDrawer`)
-* **Markup:** Lines 1106–1200 in `index.html`.
-* **Behavior:**
-  * Displays itemized list with chosen modifiers (`.cart-mod-pill`).
-  * In-cart quantity steppers (`.modal-stepper-plus`, `.modal-stepper-minus`).
-  * Segmented fulfillment switcher (`.fulfillment-segmented .seg-btn`).
-  * Promo discount validator (`#promoInput`, `#btnApplyPromo`).
-  * Fee summary breakdown (`.breakdown-row`).
-  * Checkout CTA routing to Flipdish (`#btnProceedCheckout`).
+### 7.2 Badge & Indicator Components
 
-### 7.5 Drag Handle Pill (`.drawer-drag-handle`)
-* **Markup:** Placed at the top of all modal and drawer windows.
-* **Dimensions:** `48px × 5px` pill with `border-radius: 999px`.
-* **Touch Zone:** Expanded via `::before` pseudo-element to `40px+` vertical hit target.
-* **Event Listeners:** Tap dismiss, touch swipe-down dismiss (`> 35px` delta), and keyboard <kbd>Enter</kbd> / <kbd>Space</kbd> dismiss.
+```html
+<!-- Live Operational Status Badge -->
+<span class="badge-tag badge-live">
+  <span class="pulse-dot" aria-hidden="true"></span>
+  <span>Open Today: 4:00 PM – 11:00 PM</span>
+</span>
+
+<!-- Dietary Tag Badge -->
+<span class="dish-dietary-badge veg">VEG</span>
+
+<!-- Light-Mode AAA High-Contrast Price Badge -->
+<span class="dish-price-badge">€14.99</span>
+
+<!-- Cart Item Modifier Pill -->
+<span class="cart-mod-pill">+ Extra Grilled Meat (€3.50)</span>
+```
+
+### 7.3 Form Input Components (`.modal-input` & `.modal-select`)
+
+```html
+<!-- Text Input with Focus Glow -->
+<div class="modal-form-group">
+  <label for="resName">Full Name *</label>
+  <input type="text" id="resName" class="modal-input" required placeholder="e.g. John Doe" />
+</div>
+
+<!-- Custom Select Dropdown with Embedded SVG Arrow -->
+<div class="modal-form-group">
+  <label for="resPartySize">Number of Guests *</label>
+  <select id="resPartySize" class="modal-select" required>
+    <option value="2">2 Guests (Standard Table)</option>
+    <option value="4">4 Guests (Family Booth)</option>
+  </select>
+</div>
+```
 
 ---
 
@@ -270,66 +324,79 @@ graph TD
 
 ### 8.1 State Management (`orderState` & `orderCart`)
 
-All runtime e-commerce state is held in `js/app.js`:
+All runtime e-commerce and UI state is managed in `js/app.js`:
 
 ```javascript
+// Global Fulfillment & Pricing State
 let orderState = {
   fulfillment: 'collection',       // 'collection' | 'delivery'
-  hasConfirmedMode: false,         // Set true when user confirms modal
-  appliedCoupon: null,             // 'LEZZETLI10' (10% discount)
-  deliveryFee: 3.00,               // Applied only when fulfillment === 'delivery'
-  serviceFee: 0.75                 // Packaging & service fee
+  hasConfirmedMode: false,         // True once user confirms serviceModeModal
+  appliedCoupon: null,             // 'LEZZETLI10' for 10% discount
+  deliveryFee: 3.00,               // Applied when fulfillment === 'delivery'
+  serviceFee: 0.75                 // Fixed packaging and service fee
 };
 
-let orderCart = {};                // Keyed by composite modKey
+// Keyed by unique composite modifier hash
+let orderCart = {};
 ```
 
-### 8.2 Function & Event Matrix
+### 8.2 Composite Modifier Hash Algorithm
+To allow multiple variations of the same dish with different salads, sauces, and add-ons to coexist in the order bag:
 
-| Function Name | Location | Trigger Event | Resulting Action / DOM Mutation |
+```javascript
+// js/app.js lines 928–930
+const modKey = `${currentCustomizingItem.id}_${selectedSalads.slice().sort().join('-')}_${selectedSauce}_${selectedAddons.map(a => a.name).sort().join('-')}`;
+```
+
+### 8.3 Core Function & Interaction Matrix
+
+| Function Name | Code Location | Trigger Event | Domestic State & DOM Mutations |
 | :--- | :--- | :--- | :--- |
-| `initTheme()` | `app.js:18` | Page load / Click `#themeToggleBtn` | Toggles `data-theme` attribute between `dark` and `light`; persists to `localStorage.getItem('lezzetli-theme')`. |
-| `initMenuFilters()` | `app.js:335` | Page load | Sets up category tab switching (`.category-tab-btn`), dietary pills (`.filter-pill`), and search input (`#menuSearchInput`). |
-| `renderMenu()` | `app.js:346` | Tab click / search input | Filters `MENU_ITEMS` by category, dietary flag, and search string; injects HTML into `#menuGrid`. |
-| `handleDishAction(dishId)` | `app.js:615` | Click dish card action button | If dish is customizable, calls `openCustomizer(item)`. Otherwise adds directly to `orderCart` and calls `syncCartUI()`. |
-| `openCustomizer(item)` | `app.js:770` | Click "Customize" button | Populates `#itemCustomizerModal` with dish info, resets modifier checkboxes, updates price, and calls `openModal(modal)`. |
-| `initServiceModeModal()` | `app.js:694` | Page load | Toggles active class between Collection and Delivery cards; updates `orderState.fulfillment`. |
-| `renderOrderModalCart()` | `app.js:1150`| Cart mutation / Bag open | Builds HTML for `#orderCartItemsList`, calculates subtotal, discounts, fees, and updates `#btnProceedCheckout`. |
-| `closeAllModals()` | `app.js:1267`| Click backdrop, drag handle tap, swipe down, or <kbd>Esc</kbd> | Removes `.active` class from all `.modal-backdrop` and `.cart-drawer-backdrop` elements; restores body scroll. |
-| `showToast(message)` | `app.js:1340`| State updates (theme, cart, forms) | Displays floating notification pill at `#toastNotification` for 3.2 seconds. |
+| `initTheme()` | `app.js:18` | `DOMContentLoaded` | Reads `localStorage.getItem('lezzetli-theme')` or system preference; invokes `applyTheme()`. |
+| `applyTheme(theme)` | `app.js:41` | Theme toggle click | Sets `document.documentElement.setAttribute('data-theme', theme)`; updates sun/moon SVGs across `.theme-icon-slot`. |
+| `initMenuFilters()` | `app.js:335` | `DOMContentLoaded` | Attaches click listeners to `.category-tab-btn`, `.filter-pill`, and `input` on `#menuSearchInput`; invokes `renderMenu()`. |
+| `renderMenu()` | `app.js:346` | Tab switch / Search input | Filters `MENU_ITEMS` dataset by category, dietary flag, and search string; builds and injects dish card HTML into `#menuGrid`. |
+| `handleDishAction(dishId)` | `app.js:615` | Click dish card CTA | If item is customizable, invokes `openCustomizer(item)`. Otherwise increments quantity in `orderCart` and calls `syncCartUI()`. |
+| `openCustomizer(item)` | `app.js:770` | Click "Customize" button | Injects item image, title, and base price into `#itemCustomizerModal`; builds salad checkboxes, sauce radios, and add-on cards; invokes `openModal()`. |
+| `updateCustomizerFooter()` | `app.js:865` | Modifier toggle / Stepper | Recalculates `customizerQty * (rawPrice + addonsTotal)`; updates `#customizerAddBtn` price text. |
+| `initServiceModeModal()` | `app.js:694` | `DOMContentLoaded` | Handles card selection between Collection and Delivery; sets `orderState.fulfillment` and updates segmented tabs. |
+| `renderOrderModalCart()` | `app.js:1150`| Cart mutation / Bag open | Builds HTML for `#orderCartItemsList`; calculates subtotal, discounts, fees, and final total; updates `#btnProceedCheckout`. |
+| `updateCartLineQty(lineId, delta)` | `app.js:1120`| Stepper `+` or `−` click | Modifies quantity of target line item. If quantity reaches 0, deletes line item from `orderCart`; invokes `syncCartUI()`. |
+| `closeAllModals()` | `app.js:1267`| Backdrop click, drag handle tap, swipe down, <kbd>Esc</kbd> | Removes `.active` class from all modals; restores body scroll; returns focus to `activeModalTrigger`. |
+| `showToast(message)` | `app.js:1340`| State updates | Injects text into `#toastNotification`, adds `.show` class, and schedules removal after 3.2 seconds. |
 
 ---
 
 ## Section 9: Responsive Behavior
 
-### 9.1 Viewport Adaptation Matrix
+### 9.1 Viewport Breakpoint Specifications
 
-| Component / Feature | Desktop (`> 1024px`) | Mobile (`<= 640px`) | Implementation Evidence |
-| :--- | :--- | :--- | :--- |
-| **Site Navigation** | Horizontal link bar + CTAs | Hamburger toggle (`#mobileNavToggle`) + Slide drawer (`#mobileNavDrawer`) | `css/styles.css:2995–3006` |
-| **Bottom Navigation Dock** | Hidden (`display: none`) | Fixed 4-button thumb navigation bar (`Menu`, `Book`, `Call`, `Bag`) | `css/styles.css:2890–2945` |
-| **Menu Grid** | 3-column CSS Grid (`grid-template-columns: repeat(3, 1fr)`) | 1-column layout (`grid-template-columns: 1fr`) | `css/styles.css:3021–3024` |
-| **Category Tabs** | Centered wrapped flex container | Horizontal edge-to-edge touch carousel with hidden scrollbars | `css/styles.css:3026–3042` |
-| **Modal Dialogs** | Centered floating modal window with top-right `✕` button | **Slide-up bottom sheet** (`max-height: 88vh`) docked to bottom edge; close button **hidden** | `css/styles.css:3875–3907` |
-| **Drawers (`#orderDrawer`, `#reservationModal`)** | Slide-in from right edge (`width: 480px` / `500px`) | Slide-up bottom sheet with top drag handle; close button **hidden** | `css/styles.css:2640–2685` |
-| **Floating Order Tray** | Docked at `bottom: 24px` | Docked at `bottom: 84px` (elevated above the mobile bottom dock) | `css/styles.css:2791–2799` |
+| Component / Subsystem | Desktop (`> 1024px`) | Tablet (`640px – 1024px`) | Mobile (`<= 640px`) | Implementation Evidence |
+| :--- | :--- | :--- | :--- | :--- |
+| **Site Navigation** | Horizontal link bar + dual CTA buttons | Horizontal menu or condensed actions | Collapsed into hamburger toggle (`#mobileNavToggle`) with slide drawer (`#mobileNavDrawer`) | `css/styles.css:2995–3020` |
+| **Mobile Bottom Dock** | Hidden (`display: none`) | Hidden (`display: none`) | Fixed 4-button thumb navigation docked to bottom edge (`z-index: 95`) | `css/styles.css:2890–2945` |
+| **Menu Grid** | 3 columns (`repeat(3, 1fr)`) | 2 columns (`repeat(2, 1fr)`) | 1 column (`1fr`) with full-width cards | `css/styles.css:3021–3024` |
+| **Category Tabs** | Centered wrapped flex container | Centered flex container | Horizontal edge-to-edge touch carousel with hidden scrollbars | `css/styles.css:3026–3042` |
+| **Modal Windows** | Centered dialog card with top-right `✕` button | Centered dialog card (`max-width: 520px`) | **Slide-up bottom sheet** (`max-height: 88vh`, `border-radius: 24px 24px 0 0`); close button **hidden** | `css/styles.css:3875–3907` |
+| **Drawers (`#orderDrawer`, `#reservationModal`)** | Slide-in right panel (`width: 480px` / `500px`) | Slide-in right panel (`width: 440px`) | **Slide-up bottom sheet** docked to screen bottom with top drag handle; close button **hidden** | `css/styles.css:2640–2685` |
+| **Floating Order Tray** | Docked at `bottom: 24px` | Docked at `bottom: 24px` | Docked at `bottom: 84px` (positioned above mobile navigation dock) | `css/styles.css:2791–2799` |
 
 ---
 
 ## Section 10: Third-Party Integrations & External Services
 
-### 10.1 Food Ordering: Flipdish Integration
-* **Integration Model:** External web application redirection.
+### 10.1 Online Food Ordering: Flipdish Integration
+* **Integration Model:** Direct external web application redirection.
 * **Collection URL:** `https://www.lezzetli.ie/order#/restaurant/40933/collection/68471`
 * **Delivery URL:** `https://www.lezzetli.ie/order#/restaurant/40933/delivery`
-* **Transition Experience:** When the customer clicks "Checkout" in `#orderDrawer`, JavaScript identifies the active fulfillment mode, displays a notification toast, and opens the verified Flipdish ordering store in a new browser tab (`target="_blank"`, `rel="noopener,noreferrer"`).
-* **Architecture Note:** The Lezzetli website acts as the **brand showcase and customer engagement layer**; payment handling, kitchen ticketing, and driver dispatch are managed on Flipdish's infrastructure.
+* **Customer Journey:** When a user clicks "Checkout" in `#orderDrawer`, JavaScript checks `orderState.fulfillment`, shows a toast notification, and opens the corresponding Flipdish ordering page in a new browser tab (`window.open(flipdishUrl, '_blank', 'noopener,noreferrer')`).
+* **Architectural Boundary:** Financial transactions, payment processing (credit card/Apple Pay), kitchen ticket generation, and delivery logistics are **entirely managed by Flipdish**.
 
 ### 10.2 Table Reservations: Client-Side Inquiry with Phone Fallback
-* **Integration Model:** In-house form validation with telephone fallback.
+* **Integration Model:** Client-side form validation with telephone fallback.
 * **Form ID:** `#externalBookingForm` in `#reservationModal`.
-* **Behavior:** Validates party size, date, time, and contact info; displays confirmation toast; advises that the host will phone to confirm.
-* **Instant Fallback:** Displays high-priority link: `tel:045494056` for large groups (8+ guests).
+* **Behavior:** Validates party size, reservation date, time, name, and mobile number. Upon submission, shows a confirmation toast and resets the form.
+* **Direct Telephone Fallback:** Prominently links `tel:045494056` for large groups (8+ guests).
 * **Backend Status:** **No automated reservation API (such as OpenTable or Resy) is integrated.**
 
 ### 10.3 Mapping: Google Maps Embed API
@@ -337,9 +404,9 @@ let orderCart = {};                // Keyed by composite modKey
 * **Embed URL:** `https://www.google.com/maps/embed?pb=...` (Unit 3, Limerick Lane, Newbridge, Co. Kildare).
 * **External Link:** `https://maps.google.com/?q=Unit+3,+Limerick+Lane,+Newbridge,+W12+R274`.
 
-### 10.4 Assets & Fonts CDN
-* **Typography:** Google Fonts CDN (`Cinzel`, `Outfit`, `Playfair Display`).
-* **Photography:** Unsplash Image CDN (`images.unsplash.com`) loaded with `auto=format&fit=crop` parameters.
+### 10.4 External Assets & CDN Dependencies
+* **Typography CDN:** Google Fonts (`Cinzel`, `Outfit`, `Playfair Display`).
+* **Image CDN:** Unsplash (`images.unsplash.com`) loaded with `auto=format&fit=crop` parameters.
 
 ---
 
@@ -348,31 +415,31 @@ let orderCart = {};                // Keyed by composite modKey
 ### 11.1 Code-Observable Findings
 
 #### 1. Color Contrast in Light Theme
-* **Target:** `.dish-price-badge` on food imagery.
-* **Implementation:** White background pill (`#FFFFFF`) with dark coffee text (`#110C0A`) and gold border (`#B27B23`).
+* **Target:** `.dish-price-badge` on food photography.
+* **Implementation:** White background pill (`#FFFFFF`) with dark coffee text (`#110C0A`) and rich mustard gold border (`#B27B23`).
 * **Evaluation:** Contrast ratio of **19.5:1**, far exceeding the WCAG 2.1 AAA requirement of 7:1.
 
-#### 2. Keyboard Focus Management on Modals
-* **Implementation:** `openModal(modal)` stores the triggering element in `activeModalTrigger` and attaches a Tab key listener to trap focus within the modal window. `closeAllModals()` restores focus to `activeModalTrigger.focus()` (WCAG 2.4.3).
+#### 2. Keyboard Focus Management & Dialog Trapping
+* **Implementation:** `openModal(modal)` captures the triggering element in `activeModalTrigger` and traps keyboard focus within the modal window. `closeAllModals()` restores focus to `activeModalTrigger.focus()` (WCAG 2.4.3).
 * **Evaluation:** Implemented properly in `js/app.js` (lines 1277–1281).
 
-#### 3. Touch Target Sizing on Mobile
+#### 3. Touch Target Dimensions on Mobile
 * **Implementation:** Drag handles, quantity steppers, filter pills, and navigation dock buttons have minimum dimensions of `44px × 44px` or use pseudo-element touch expanders (`::before` on `.drawer-drag-handle`).
 * **Evaluation:** Complies with WCAG 2.5.5 (Target Size).
 
 ### 11.2 Areas Requiring Assistive Technology Testing
-* **Screen Reader Announcement on Dynamic Cart Mutations:** Stepper updates in `#orderCartItemsList` should be verified with NVDA/VoiceOver to confirm polite live region announcements (`aria-live="polite"`).
+* **Live Region Announcements on Dynamic Cart Updates:** Quantity updates in `#orderCartItemsList` should be verified with screen readers (NVDA / VoiceOver) to ensure cart totals announce clearly via `aria-live="polite"`.
 
 ---
 
 ## Section 12: Technical Quality & Maintainability
 
-| Issue / Observation | Priority | Impact | Reasoning / Action Required |
+| Finding / Area | Priority | Impact | Maintenance Guidance |
 | :--- | :---: | :---: | :--- |
-| **Hardcoded Menu Dataset in `app.js`** | **Medium** | Content Updates | All 13 menu items are hardcoded in `js/app.js`. Updating prices or adding seasonal items requires code edits. **Recommendation:** Extract into a separate `data/menu.json` file. |
-| **Mock Submission on Table Booking** | **Medium** | Operations | Booking form submissions do not write to an API or send email/SMS. Staff must rely on phone inquiries or manually checking client-side inquiries if hooked to a webhook. |
-| **External Redirection to Flipdish** | **Low** | Cart Sync | Cart items added in the custom web app are not automatically passed into Flipdish's cart session due to Flipdish's closed iframe/API architecture. The redirect lands on the store entrance. |
-| **No Build Tooling Required** | **Advantage** | Maintainability | The project has zero `node_modules` vulnerabilities, zero compilation steps, and can be edited and hosted immediately on any static web server. |
+| **Hardcoded Menu Dataset in `app.js`** | **Medium** | Content Updates | All 13 menu items are defined inside `js/app.js`. Updating dishes or prices requires editing JavaScript code. **Recommendation:** Extract into a separate `data/menu.json` file. |
+| **Simulated Table Booking Submissions** | **Medium** | Operations | Table booking inquiries do not write to a database or send email notifications. **Recommendation:** Connect `#externalBookingForm` to a form handler webhook (e.g. Formspree or email API). |
+| **External Redirection to Flipdish** | **Low** | Cart Sync | Cart items configured in the custom website do not automatically pre-fill Flipdish's checkout due to Flipdish's closed URL scheme. Users land on the store menu. |
+| **Zero Build Tooling Footprint** | **Advantage** | Maintainability | The project has zero compilation steps, zero `package.json` dependencies, and can be maintained and deployed immediately on any web host. |
 
 ---
 
