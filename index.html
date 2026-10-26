@@ -66,29 +66,36 @@
       <nav class="desktop-nav" aria-label="Main Navigation">
         <ul class="nav-menu">
           <li><a href="#menu" class="nav-link">Menu</a></li>
-          <li><a href="#story" class="nav-link">Our Story</a></li>
+          <li><a href="#story" class="nav-link">What is Naatu?</a></li>
           <li><a href="#reviews" class="nav-link">Reviews</a></li>
           <li><a href="#contact" class="nav-link">Visit & Hours</a></li>
         </ul>
       </nav>
 
-      <!-- Header Actions (Theme Toggle & Dual CTAs) -->
+      <!-- Header Actions (Streamlined: Ambient Music Pill, Theme Toggle & Mobile Trigger) -->
       <div class="header-actions">
+        <!-- Ambient Indian Instrumental Music Toggle (Sleek Pill) -->
+        <button id="musicToggleBtn" class="music-toggle-btn" aria-label="Toggle ambient Indian instrumental music" title="Play/Pause Ambient Music">
+          <span class="music-icon-wrap" id="musicIconWrap">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M9 18V5l12-2v13"></path>
+              <circle cx="6" cy="18" r="3"></circle>
+              <circle cx="18" cy="16" r="3"></circle>
+            </svg>
+            <span class="music-eq-waves" aria-hidden="true">
+              <span class="music-eq-bar"></span>
+              <span class="music-eq-bar"></span>
+              <span class="music-eq-bar"></span>
+            </span>
+          </span>
+          <span class="music-pill-label">Music</span>
+        </button>
+
         <!-- Light / Dark Theme Switcher -->
         <button id="themeToggleBtn" class="theme-toggle" aria-label="Toggle Light and Dark Mode" title="Toggle Day/Evening Mode">
           <span class="theme-icon-slot">
-            <!-- Icon injected via app.js -->
+            <!-- SVG Icon injected via app.js -->
           </span>
-        </button>
-
-        <!-- Symmetrical Primary Conversion Actions -->
-        <button class="btn btn-outline-gold btn-sm trigger-book-table" aria-haspopup="dialog" title="Book a dining room table">
-          <span>Book Table</span>
-          <span aria-hidden="true">↗</span>
-        </button>
-
-        <button class="btn btn-gold btn-sm trigger-order-now" aria-haspopup="dialog" title="Order takeaway or delivery">
-          <span>Order Online</span>
         </button>
 
         <!-- Mobile Hamburger Button -->
@@ -114,31 +121,37 @@
           
           <!-- Hero Narrative Column -->
           <div class="hero-content">
+            <div class="badge-tag badge-gold" style="margin-bottom: 0.85rem;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <span>Authentic Indian Fine Dining • Newbridge</span>
+            </div>
+
             <!-- Single Semantic H1 for the entire page -->
             <h1 class="hero-title" id="heroMainHeading">
-              Where Charcoal Fire Meets <span>Royal Hyderabadi & South Indian</span> Heritage
+              Two Cultures. <span>One Table.</span>
             </h1>
 
             <p class="hero-lead">
-              Experience the smoky perfection of charcoal-grilled kebabs, slow-dum Hyderabadi biryanis, and vibrant South Indian delicacies. Crafted fresh daily in Newbridge with artisanal spices and traditional clay tandoors.
+              Where authentic South Indian roots, royal Hyderabadi Dum biryanis, and flame-kissed Middle Eastern charcoal grills & shawarmas unite in an unforgettable fine dining experience in Newbridge.
             </p>
 
+            <!-- Three Consolidated Primary Action Buttons with Refined Hierarchy -->
             <div class="hero-actions">
-              <a href="#menu" class="btn btn-gold">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
-                <span>Explore Food Menu</span>
-              </a>
+              <button class="btn btn-gold trigger-order-now" id="heroOrderBtn" title="Order takeaway and delivery">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                <span>Order Online</span>
+              </button>
 
-              <button class="btn btn-outline-gold trigger-book-table" aria-haspopup="dialog">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+              <button class="btn btn-outline-gold trigger-book-table" id="heroBookBtn" aria-haspopup="dialog" title="Book a dining table">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
                 <span>Book a Table</span>
                 <svg class="btn-arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
               </button>
 
-              <button class="btn btn-tandoori trigger-order-now" aria-haspopup="dialog">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
-                <span>Order Takeaway</span>
-              </button>
+              <a href="#menu" class="btn btn-ghost-gold" id="heroMenuBtn" title="Explore all culinary categories">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                <span>Explore Menu</span>
+              </a>
             </div>
 
             <!-- Trust Signals & Differentiators -->
@@ -192,17 +205,97 @@
               </div>
             </div>
 
-            <!-- Floating Trust Pill -->
+            <!-- Floating Trust Pill with SVG Stars -->
             <div class="hero-floating-badge" aria-label="Customer review badge">
-              <div class="stars">★★★★★</div>
+              <div class="stars" style="display: flex; gap: 3px; color: var(--gold-primary);">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              </div>
               <div>
                 <div class="badge-label">"Hyderabad ki mashoor biryani"</div>
-                <div class="badge-sub">— Mubashra Khan (Verified Google Review)</div>
+                <div class="badge-sub">Mubashra Khan (Verified Google Review)</div>
               </div>
             </div>
           </div>
 
         </div>
+
+        <!-- HERO TRIO SHOWCASE (TWO CULTURES. ONE TABLE. BIRYANI, CURRY & SHAWARMA) -->
+        <div class="hero-trio-showcase" aria-label="Culinary Trio Showcase">
+          <div class="hero-trio-title-row">
+            <h3 class="hero-trio-heading">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <span>Two Cultures. One Table.</span>
+            </h3>
+            <span class="hero-trio-tag">Biryani • Curry • Shawarma Showcase</span>
+          </div>
+
+          <div class="hero-trio-grid">
+            <!-- 1. Biryani Card -->
+            <article class="hero-trio-card">
+              <div class="hero-trio-img-wrap">
+                <img 
+                  src="https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=600&q=80" 
+                  alt="Royal Hyderabadi Dum Biryani" 
+                  loading="lazy"
+                />
+                <span class="hero-trio-badge">Royal Indian</span>
+              </div>
+              <div class="hero-trio-body">
+                <h4 class="hero-trio-card-title">Hyderabadi Dum Biryani</h4>
+                <p class="hero-trio-card-desc">Pot-sealed, slow-dum aged basmati infused with royal saffron, whole spices, and tender marinated cuts.</p>
+                <div class="hero-trio-card-meta">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>Dum Pukht Sealed Pot</span>
+                </div>
+              </div>
+            </article>
+
+            <!-- 2. Curry Card -->
+            <article class="hero-trio-card">
+              <div class="hero-trio-img-wrap">
+                <img 
+                  src="https://images.unsplash.com/photo-1589302168068-964664d93dc0?auto=format&fit=crop&w=600&q=80" 
+                  alt="Artisanal Indian Regional Curries" 
+                  loading="lazy"
+                />
+                <span class="hero-trio-badge">Coastal & Royal</span>
+              </div>
+              <div class="hero-trio-body">
+                <h4 class="hero-trio-card-title">Artisanal Regional Curries</h4>
+                <p class="hero-trio-card-desc">From Saag Paneer to fiery Andhra Gongura and classic Butter Chicken, simmered in traditional brass vessels.</p>
+                <div class="hero-trio-card-meta">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>Stone-Ground Masalas</span>
+                </div>
+              </div>
+            </article>
+
+            <!-- 3. Shawarma Card -->
+            <article class="hero-trio-card">
+              <div class="hero-trio-img-wrap">
+                <img 
+                  src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=600&q=80" 
+                  alt="Charcoal Grills and Middle Eastern Shawarma" 
+                  loading="lazy"
+                />
+                <span class="hero-trio-badge">Charcoal & Rotisserie</span>
+              </div>
+              <div class="hero-trio-body">
+                <h4 class="hero-trio-card-title">Charcoal Grills & Shawarma</h4>
+                <p class="hero-trio-card-desc">Sumac-spiced rotisserie chicken shawarma, grilled shish kebabs, and fresh oven naans with house garlic toum.</p>
+                <div class="hero-trio-card-meta">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>Live Charcoal Flame</span>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+
       </div>
     </section>
 
@@ -286,28 +379,40 @@
 
         <!-- Menu Filter Controls -->
         <div class="menu-controls">
-          <!-- Category Tabs -->
-          <div class="menu-categories-scroll" role="tablist" aria-label="Food Categories">
-            <button class="category-tab-btn active" data-category="all" role="tab" aria-selected="true">
-              All Specialties
+          <!-- Accessible Category Tabs Carousel with Navigation Indicators -->
+          <div class="menu-categories-wrapper">
+            <button type="button" class="cat-nav-btn cat-nav-prev" id="catNavPrev" aria-label="Scroll categories backward" title="Previous categories">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
             </button>
-            <button class="category-tab-btn" data-category="grills" role="tab" aria-selected="false">
-              Charcoal Grills & Kebabs
-            </button>
-            <button class="category-tab-btn" data-category="biryani" role="tab" aria-selected="false">
-              Hyderabadi Dum Biryani
-            </button>
-            <button class="category-tab-btn" data-category="south-indian" role="tab" aria-selected="false">
-              South Indian Delicacies
-            </button>
-            <button class="category-tab-btn" data-category="curries" role="tab" aria-selected="false">
-              Royal Curries
-            </button>
-            <button class="category-tab-btn" data-category="tandoor" role="tab" aria-selected="false">
-              Tandoori & Fresh Naans
-            </button>
-            <button class="category-tab-btn" data-category="starters" role="tab" aria-selected="false">
-              Starters & Wings
+            <div class="category-fade-edge fade-left" id="catFadeLeft" aria-hidden="true"></div>
+
+            <div class="menu-categories-scroll" id="menuCategoriesScroll" role="tablist" aria-label="Food Categories">
+              <button class="category-tab-btn active" data-category="all" role="tab" aria-selected="true">
+                All Specialties
+              </button>
+              <button class="category-tab-btn" data-category="all-day-breakfast" role="tab" aria-selected="false">
+                All Day Breakfast
+              </button>
+              <button class="category-tab-btn" data-category="biryani" role="tab" aria-selected="false">
+                Hyderabadi Biryanis
+              </button>
+              <button class="category-tab-btn" data-category="curries" role="tab" aria-selected="false">
+                Royal &amp; Coastal Curries
+              </button>
+              <button class="category-tab-btn" data-category="naatu-specials" role="tab" aria-selected="false">
+                Naatu Specials
+              </button>
+              <button class="category-tab-btn" data-category="wok-snacks" role="tab" aria-selected="false">
+                Wok Snacks
+              </button>
+              <button class="category-tab-btn" data-category="grills" role="tab" aria-selected="false">
+                Charcoal Grills &amp; Kebabs
+              </button>
+            </div>
+
+            <div class="category-fade-edge fade-right" id="catFadeRight" aria-hidden="true"></div>
+            <button type="button" class="cat-nav-btn cat-nav-next" id="catNavNext" aria-label="Scroll categories forward" title="Next categories">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>
             </button>
           </div>
 
@@ -466,7 +571,13 @@
         <div class="reviews-grid">
           <!-- Review 1 -->
           <article class="review-card">
-            <div class="review-stars">★★★★★</div>
+            <div class="review-stars" aria-label="5 out of 5 stars" style="display: flex; gap: 3px; color: var(--gold-primary); margin-bottom: 0.75rem;">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            </div>
             <p class="review-text">
               "Best taste best services, felt like home. Taste of biryani was sooooo on point as if I am having hyderabad ki mashoor biryani! Solid 5/5 for everything."
             </p>
@@ -474,29 +585,41 @@
               <div class="review-avatar">MK</div>
               <div class="review-author-meta">
                 <h5>Mubashra Khan</h5>
-                <span>Verified Google Review • Food: 5/5</span>
+                <span>Verified Google Review | Food: 5/5</span>
               </div>
             </div>
           </article>
 
           <!-- Review 2 -->
           <article class="review-card">
-            <div class="review-stars">★★★★★</div>
+            <div class="review-stars" aria-label="5 out of 5 stars" style="display: flex; gap: 3px; color: var(--gold-primary); margin-bottom: 0.75rem;">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            </div>
             <p class="review-text">
-              "Just had one of the best Saag Paneers in forever—like, call-your-mom-and-tell-her level good. Solid 5/5 for taste, presentation, and ambience. Authentic desi vibes. Plenty of parking lot space."
+              "Just had one of the best Saag Paneers in forever, truly call-your-mom-and-tell-her level good. Solid 5/5 for taste, presentation, and ambience. Authentic desi vibes. Plenty of parking lot space."
             </p>
             <div class="review-author">
               <div class="review-avatar">RN</div>
               <div class="review-author-meta">
                 <h5>Rahil Nazir</h5>
-                <span>Dine-In Guest • Atmosphere: 5/5</span>
+                <span>Dine-In Guest | Atmosphere: 5/5</span>
               </div>
             </div>
           </article>
 
           <!-- Review 3 -->
           <article class="review-card">
-            <div class="review-stars">★★★★★</div>
+            <div class="review-stars" aria-label="5 out of 5 stars" style="display: flex; gap: 3px; color: var(--gold-primary); margin-bottom: 0.75rem;">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            </div>
             <p class="review-text">
               "Lovely food. Very fresh and good quality. Staff were very friendly and welcoming. Recommended dishes: Naan and Grilled Chicken. Will definitely be returning!"
             </p>
@@ -504,7 +627,7 @@
               <div class="review-avatar">AH</div>
               <div class="review-author-meta">
                 <h5>Aisling Heavey</h5>
-                <span>Local Resident • Food: 5/5</span>
+                <span>Local Resident | Food: 5/5</span>
               </div>
             </div>
           </article>
@@ -513,49 +636,79 @@
     </section>
 
     <!-- ========================================================================
-         OUR STORY & CULINARY HERITAGE
+         OUR STORY: WHAT IS NAATU? (RURAL VILLAGE CRAFT & RRR / NTR HOMAGE)
          ======================================================================== -->
     <section class="section" id="story" aria-labelledby="storyHeading">
       <div class="container">
         <div class="story-grid">
           
+          <!-- Story Visual Media Column -->
           <div class="story-media">
             <div class="story-media-card">
               <img 
-                src="https://images.unsplash.com/photo-1610057099443-fde8c4d50f91?auto=format&fit=crop&w=800&q=80" 
-                alt="Clay oven roasting tandoori chicken and baking naan" 
+                src="https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=1000&q=80" 
+                alt="Rural Indian Village cooking craft and traditional earthen clay pot hearths" 
                 loading="lazy"
               />
             </div>
+            <!-- Floating Heritage Seal -->
+            <div class="story-floating-seal">
+              <div class="seal-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              </div>
+              <div class="seal-text">
+                <strong>Village Hearth Craft</strong>
+                <span>Uncompromised Native Roots</span>
+              </div>
+            </div>
           </div>
 
+          <!-- Story Narrative Column -->
           <div class="story-content">
-            <span class="badge-tag badge-gold" style="margin-bottom: 0.75rem;">Heritage & Craft</span>
-            <h2 id="storyHeading">Crafted With Whole Spices, Live Fire & Heart</h2>
+            <span class="badge-tag badge-gold" style="margin-bottom: 0.75rem;">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <span>Rural Indian Village Heritage</span>
+            </span>
+            <h2 id="storyHeading">What is NAATU?</h2>
             <p>
-              Naatu was born from a deep reverence for authentic Indian culinary traditions and the theatre of live fire. Inspired by the rich heritage of India's royal courts and vibrant coastal kitchens, Naatu brings together slow-dum Hyderabadi biryanis, aromatic regional curries, and succulent charcoal-fired tandoori grills in an elevated fine dining atmosphere.
+              In Telugu, <em>Naatu</em> signifies something raw, rustic, unpretentious, and fiercely rooted in the countryside soil. It represents food cooked with unhurried patience over open wood fires and clay hearths, stone-ground on traditional granite mortars and seasoned with cold-pressed gingelly oil, whole mustard seeds, and sun-dried fiery chillies.
             </p>
             <p>
-              Every morning in our Newbridge kitchen, whole spices—cardamom pods, cloves, cumin, and Kashmiri chilies—are freshly roasted and ground. Our naans are slapped by hand against the roaring clay walls of our tandoor oven, ensuring authentic blistered perfection on every plate.
+              At <strong>Naatu</strong>, we bring that unapologetic village soul into modern fine dining. Every morning in our Newbridge kitchen, whole spices are roasted fresh, stone-ground curries simmer in heavy brass pots, and live charcoal flames crisp our skewered grills and authentic Middle Eastern shawarma.
             </p>
 
-            <div class="story-highlights">
-              <div>
-                <div class="story-stat-num">400°C</div>
-                <div class="story-stat-label">Traditional Clay Tandoor Heat</div>
+            <!-- RRR & Jr NTR Cultural Tribute Card -->
+            <div class="rr-tribute-card">
+              <div class="rr-tribute-header">
+                <span class="rr-tribute-badge">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <span>Inspired by RRR &amp; Jr NTR</span>
+                </span>
               </div>
-              <div>
-                <div class="story-stat-num">24 Hr</div>
-                <div class="story-stat-label">Slow Spiced Marinades</div>
-              </div>
-              <div>
-                <div class="story-stat-num">100%</div>
-                <div class="story-stat-label">Freshly Baked Daily Naans</div>
-              </div>
-              <div>
-                <div class="story-stat-num">W12 R274</div>
-                <div class="story-stat-label">Limerick Lane, Newbridge</div>
-              </div>
+              <h3 class="rr-tribute-title">The Spirit of "Naatu Naatu"</h3>
+              <p class="rr-tribute-text">
+                Inspired by the Oscar-winning phenomenon <em>Naatu Naatu</em> and the fierce, electric native pride of <strong>Jr NTR</strong>, our restaurant celebrates the same unstoppable spirit of brotherhood and unvarnished indigenous culture. No pretense or artificial shortcuts, just pure, fiery, heart-pounding native flavor.
+              </p>
+            </div>
+          </div>
+
+          <!-- Stately 4-Column Highlights Strip (Full Width Balance) -->
+          <div class="story-highlights-bar">
+            <div class="story-highlight-card">
+              <div class="story-stat-num">400°C</div>
+              <div class="story-stat-label">Traditional Clay Tandoor Heat</div>
+            </div>
+            <div class="story-highlight-card">
+              <div class="story-stat-num">24 Hr</div>
+              <div class="story-stat-label">Slow Spiced Marinades</div>
+            </div>
+            <div class="story-highlight-card">
+              <div class="story-stat-num">100%</div>
+              <div class="story-stat-label">Fresh Daily Made Naans</div>
+            </div>
+            <div class="story-highlight-card">
+              <div class="story-stat-num">W12 R274</div>
+              <div class="story-stat-label">Limerick Lane, Newbridge</div>
             </div>
           </div>
 
@@ -873,7 +1026,9 @@
             <h3 id="resModalTitle">Reserve Your Table</h3>
           </div>
         </div>
-        <button class="cart-drawer-close-btn" id="reservationDrawerCloseBtn" aria-label="Close table reservation">✕</button>
+        <button class="cart-drawer-close-btn" id="reservationDrawerCloseBtn" aria-label="Close table reservation">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
       </div>
 
       <!-- Drawer Body (Scrollable Form) -->
@@ -890,17 +1045,18 @@
         </div>
 
         <form id="externalBookingForm">
+          <!-- Standard Guest Count Dropdown (Reverted from Vehicle Selector per Client Feedback) -->
           <div class="modal-form-group">
             <label for="resPartySize">Number of Guests</label>
             <select id="resPartySize" class="modal-select" required>
-              <option value="2" selected>2 Guests (Standard Table)</option>
-              <option value="1">1 Guest (Single Diner)</option>
-              <option value="3">3 Guests</option>
-              <option value="4">4 Guests</option>
+              <option value="1">1 Guest (Solo Dining)</option>
+              <option value="2" selected>2 Guests (Couple / Standard Table)</option>
+              <option value="3">3 Guests (Small Group)</option>
+              <option value="4">4 Guests (Family Table)</option>
               <option value="5">5 Guests</option>
-              <option value="6">6 Guests</option>
+              <option value="6">6 Guests (Large Table)</option>
               <option value="7">7 Guests</option>
-              <option value="large">8+ Guests (Call Restaurant Directly)</option>
+              <option value="8+">8+ Guests (Call Restaurant Directly)</option>
             </select>
           </div>
 
@@ -962,75 +1118,7 @@
     </div>
   </div>
 
-  <!-- ========================================================================
-       MODAL: ORDER SERVICE MODE SELECTOR (DELIVERY OR COLLECT)
-       ======================================================================== -->
-  <div class="modal-backdrop" id="serviceModeModal" role="dialog" aria-modal="true" aria-labelledby="serviceModeTitle">
-    <div class="modal-window service-mode-window">
-      <!-- Mobile Drag Handle -->
-      <div class="drawer-drag-handle" aria-hidden="true"></div>
-      <button class="modal-close-btn" id="serviceModeCloseBtn" aria-label="Close modal">✕</button>
-      
-      <div class="modal-header text-center">
-        <span class="badge-tag badge-gold" style="margin-bottom: 0.5rem;">Online Ordering</span>
-        <h3 id="serviceModeTitle">How would you like your order?</h3>
-        <p>Choose your preferred service option to proceed with your order</p>
-      </div>
 
-      <div class="service-mode-options">
-        <!-- Collection Option -->
-        <button type="button" class="service-option-card active" data-mode="collection" id="btnSelectCollect">
-          <div class="service-option-icon">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-          </div>
-          <div class="service-option-details">
-            <div class="service-option-title-row">
-              <h4>Collection</h4>
-              <span class="service-time-pill">15–20 mins</span>
-            </div>
-            <p class="service-store-name">Naatu</p>
-            <p class="service-store-addr">Unit 3, Limerick Lane, Newbridge, Co. Kildare, W12 R274</p>
-            <div class="service-meta-tags">
-              <span class="meta-tag">Min spend: €1.00</span>
-              <span class="meta-tag">Open: 16:00 – 23:00</span>
-            </div>
-          </div>
-          <div class="service-check-indicator" aria-hidden="true">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          </div>
-        </button>
-
-        <!-- Delivery Option -->
-        <button type="button" class="service-option-card" data-mode="delivery" id="btnSelectDelivery">
-          <div class="service-option-icon">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
-          </div>
-          <div class="service-option-details">
-            <div class="service-option-title-row">
-              <h4>Home Delivery</h4>
-              <span class="service-time-pill">35–45 mins</span>
-            </div>
-            <p class="service-store-name">Delivering to Newbridge & Surrounding Area</p>
-            <p class="service-store-addr">Hot & fresh directly from our charcoal grill to your doorstep</p>
-            <div class="service-meta-tags">
-              <span class="meta-tag">Min spend: €12.00</span>
-              <span class="meta-tag">Fast Delivery</span>
-            </div>
-          </div>
-          <div class="service-check-indicator" aria-hidden="true">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          </div>
-        </button>
-      </div>
-
-      <div class="modal-actions" style="margin-top: 1.5rem;">
-        <button type="button" class="btn btn-gold" id="btnConfirmServiceMode" style="width: 100%;">
-          <span>Confirm & Start Order</span>
-          <svg class="btn-arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
-        </button>
-      </div>
-    </div>
-  </div>
 
   <!-- ========================================================================
        MODAL: ITEM CUSTOMIZATION (SALADS, SAUCES & ADD-ONS)
@@ -1039,7 +1127,9 @@
     <div class="modal-window item-customizer-window">
       <!-- Mobile Drag Handle -->
       <div class="drawer-drag-handle" aria-hidden="true"></div>
-      <button class="modal-close-btn" id="itemCustomizerCloseBtn" aria-label="Close customization">✕</button>
+      <button class="modal-close-btn" id="itemCustomizerCloseBtn" aria-label="Close customization">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
 
       <!-- Item Header Info -->
       <div class="customizer-header">
@@ -1122,7 +1212,9 @@
           <h3 id="orderModalTitle">Your Bag</h3>
           <span class="bag-count-pill" id="orderDrawerCountPill">0 items</span>
         </div>
-        <button class="cart-drawer-close-btn" id="orderDrawerCloseBtn" aria-label="Close order bag">✕</button>
+        <button class="cart-drawer-close-btn" id="orderDrawerCloseBtn" aria-label="Close order bag">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
       </div>
 
       <!-- Drawer Body (Single Scroll Container) -->
@@ -1193,7 +1285,9 @@
             <span class="brand-subtitle" style="font-size: 0.62rem; letter-spacing: 0.12em;">AUTHENTIC INDIAN FINE DINING</span>
           </div>
         </div>
-        <button id="closeDrawerBtn" class="modal-close-btn" style="position: static;" aria-label="Close menu">✕</button>
+        <button id="closeDrawerBtn" class="modal-close-btn" style="position: static;" aria-label="Close menu">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
       </div>
 
       <ul class="drawer-menu-links">

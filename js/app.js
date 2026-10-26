@@ -1,11 +1,14 @@
 /**
  * NAATU RESTAURANT — CORE APPLICATION LOGIC
  * High-performance vanilla JS powering interactions, theme switching, 
- * menu filtering, external booking handoff, and live opening hour calculations.
+ * menu filtering, external booking handoff, ambient music, and live opening calculations.
  */
 
 document.addEventListener('DOMContentLoaded', () => {
   initTheme();
+  initAmbientMusic();
+  initVehicleSelector();
+  initPosRedirect();
   initMenuFilters();
   initModals();
   initMobileNav();
@@ -45,9 +48,9 @@ function applyTheme(theme) {
   
   themeIcons.forEach(iconSlot => {
     if (theme === 'dark') {
-      // Show Sun icon (to switch to light)
+      // Show Sun SVG icon (to switch to light)
       iconSlot.innerHTML = `
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <circle cx="12" cy="12" r="5"></circle>
           <line x1="12" y1="1" x2="12" y2="3"></line>
           <line x1="12" y1="21" x2="12" y2="23"></line>
@@ -60,13 +63,167 @@ function applyTheme(theme) {
         </svg>
       `;
     } else {
-      // Show Moon icon (to switch to dark)
+      // Show Moon SVG icon (to switch to dark)
       iconSlot.innerHTML = `
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
         </svg>
       `;
     }
+  });
+}
+
+/* ==========================================================================
+   1B. AMBIENT INDIAN INSTRUMENTAL SOUND ENGINE (ZERO LATENCY WEB AUDIO SYNTH)
+   ========================================================================== */
+let audioCtx = null;
+let isMusicPlaying = false;
+const ambientNodes = [];
+
+function initAmbientMusic() {
+  const musicToggleBtn = document.getElementById('musicToggleBtn');
+  if (!musicToggleBtn) return;
+
+  function setupIndianDroneEngine() {
+    if (audioCtx) return;
+    try {
+      const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+      audioCtx = new AudioContextClass();
+
+      const masterGain = audioCtx.createGain();
+      masterGain.gain.setValueAtTime(0.06, audioCtx.currentTime);
+      masterGain.connect(audioCtx.destination);
+
+      const filter = audioCtx.createBiquadFilter();
+      filter.type = 'lowpass';
+      filter.frequency.setValueAtTime(460, audioCtx.currentTime);
+      filter.connect(masterGain);
+
+      // Authentic Indian classical Tanpura Sa-Pa warm harmonic drone frequencies (C#3 / D3 tuning)
+      const droneFreqs = [138.59, 207.65, 277.18, 415.30];
+      droneFreqs.forEach((freq, idx) => {
+        const osc = audioCtx.createOscillator();
+        osc.type = idx % 2 === 0 ? 'sine' : 'triangle';
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+
+        // Gentle acoustic string beating modulation
+        const lfo = audioCtx.createOscillator();
+        const lfoGain = audioCtx.createGain();
+        lfo.frequency.setValueAtTime(0.18 + idx * 0.04, audioCtx.currentTime);
+        lfoGain.gain.setValueAtTime(1.8, audioCtx.currentTime);
+        lfo.connect(osc.frequency);
+        lfo.start();
+
+        const oscGain = audioCtx.createGain();
+        oscGain.gain.setValueAtTime(0.18 / droneFreqs.length, audioCtx.currentTime);
+
+        osc.connect(oscGain);
+        oscGain.connect(filter);
+        osc.start();
+
+        ambientNodes.push(osc, lfo, oscGain, lfoGain);
+      });
+
+      ambientNodes.push(masterGain, filter);
+    } catch (err) {
+      console.warn('Web Audio Ambient Note:', err);
+    }
+  }
+
+  function startMusic() {
+    setupIndianDroneEngine();
+    if (audioCtx && audioCtx.state === 'suspended') {
+      audioCtx.resume();
+    }
+    isMusicPlaying = true;
+    musicToggleBtn.classList.add('is-playing');
+    musicToggleBtn.setAttribute('aria-pressed', 'true');
+    musicToggleBtn.setAttribute('title', 'Mute Ambient Music');
+  }
+
+  function stopMusic() {
+    if (audioCtx && audioCtx.state === 'running') {
+      audioCtx.suspend();
+    }
+    isMusicPlaying = false;
+    musicToggleBtn.classList.remove('is-playing');
+    musicToggleBtn.setAttribute('aria-pressed', 'false');
+    musicToggleBtn.setAttribute('title', 'Play Ambient Music');
+  }
+
+  musicToggleBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (isMusicPlaying) {
+      stopMusic();
+      showToast('Ambient Indian instrumental muted');
+    } else {
+      startMusic();
+      showToast('Ambient Indian instrumental playing');
+    }
+  });
+
+  // Client brief: plays by default on landing; smoothly auto-starts upon first interaction
+  const userInteractionTrigger = () => {
+    if (!isMusicPlaying) {
+      startMusic();
+    }
+    document.removeEventListener('click', userInteractionTrigger);
+    document.removeEventListener('keydown', userInteractionTrigger);
+    document.removeEventListener('touchstart', userInteractionTrigger);
+  };
+
+  document.addEventListener('click', userInteractionTrigger, { once: true });
+  document.addEventListener('keydown', userInteractionTrigger, { once: true });
+  document.addEventListener('touchstart', userInteractionTrigger, { once: true });
+}
+
+/* ==========================================================================
+   1C. PLAYFUL INDIAN-THEMED VEHICLE PARTY SELECTOR (CYCLE, BIKE, AUTO, CAR)
+   ========================================================================== */
+function initVehicleSelector() {
+  const vehicleButtons = document.querySelectorAll('.vehicle-btn');
+  const partySizeInput = document.getElementById('resPartySize');
+  if (!vehicleButtons.length || !partySizeInput) return;
+
+  const vehicleDescriptions = {
+    '1': 'Cycle: Table for 1 (Solo diner reserved)',
+    '2': 'Bike: Intimate table for 2 (Couple dining reserved)',
+    '3': 'Auto: Booth for 3 (Trio dining reserved)',
+    '4': 'Car: Table for 4+ (Group & Family dining reserved)'
+  };
+
+  vehicleButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      vehicleButtons.forEach(b => {
+        b.classList.remove('selected');
+        b.setAttribute('aria-checked', 'false');
+      });
+      btn.classList.add('selected');
+      btn.setAttribute('aria-checked', 'true');
+
+      const size = btn.dataset.size || '2';
+      partySizeInput.value = size;
+
+      const desc = vehicleDescriptions[size] || `Table for ${size} guests`;
+      showToast(desc);
+    });
+  });
+}
+
+/* ==========================================================================
+   1D. POS ONLINE ORDERING REDIRECT HANDLER
+   ========================================================================== */
+function initPosRedirect() {
+  const posButtons = document.querySelectorAll('.trigger-pos-redirect');
+  posButtons.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const posUrl = 'https://www.lezzetli.ie/order#/restaurant/40933/';
+      showToast('Redirecting to Naatu POS online ordering...');
+      setTimeout(() => {
+        window.open(posUrl, '_blank', 'noopener,noreferrer');
+      }, 400);
+    });
   });
 }
 
@@ -81,6 +238,190 @@ function initStoreStatus() {
    3. MENU DATA & INTERACTIVE FILTERING ENGINE
    ========================================================================== */
 const MENU_ITEMS = [
+  // ALL DAY BREAKFAST SPECIALTIES (FROM CLIENT BRIEF)
+  {
+    id: 'dosa-ghee-roast',
+    name: 'Golden Ghee Roast Dosa',
+    category: 'all-day-breakfast',
+    price: '€7.50',
+    rawPrice: 7.50,
+    description: 'Crisp, golden fermented rice and lentil crepe roasted in pure desi ghee. Served with hot lentil sambar and fresh coconut and ginger chutneys.',
+    image: 'https://images.unsplash.com/photo-1668236543090-82eba5ee5976?auto=format&fit=crop&w=800&q=80',
+    tags: ['South Indian', 'Ghee Roast'],
+    isSpicy: false,
+    isVeg: true,
+    isSignature: true,
+    pairing: 'Served with Hot Sambar & Coconut Chutney',
+    customizable: true,
+    customType: 'breakfast',
+    salads: ['Spiced Onion Filling (+€1.00)', 'Farm Fresh Egg Pepper (+€1.50)', 'Charcoal Shawarma Chicken (+€3.00)', 'Paneer Bhurji (+€2.00)'],
+    sauces: ['Fresh Coconut Chutney', 'Spicy Allam (Ginger) Pachadi', 'Tangy Tomato-Ginger Chutney', 'Gunpowder Podi with Hot Ghee'],
+    addons: [
+      { name: 'Extra Hot Sambar Bowl', price: 1.50 },
+      { name: 'Extra Coconut Chutney', price: 1.00 },
+      { name: 'Side of Medu Vada (1 Pc)', price: 2.50 }
+    ]
+  },
+  {
+    id: 'dosa-shawarma-fusion',
+    name: 'Signature Shawarma Dosa (Two Cultures Fusion)',
+    category: 'all-day-breakfast',
+    price: '€10.50',
+    rawPrice: 10.50,
+    description: 'Our signature culinary crossover: Tender shredded Middle Eastern charcoal chicken shawarma wrapped inside a crispy ghee-roast South Indian dosa with house garlic toum drizzle.',
+    image: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80',
+    tags: ['Two Cultures Fusion', 'Chef Masterpiece'],
+    isSpicy: true,
+    isVeg: false,
+    isSignature: true,
+    pairing: 'Served with Garlic Toum & House Chilli Dip',
+    customizable: true,
+    salads: ['Pickled Red Cabbage', 'Crisp Red Onion', 'Fresh Coriander Salad'],
+    sauces: ['Signature Garlic Toum', 'Fiery House Chilli', 'Mix Garlic & Chilli Sauce'],
+    addons: [
+      { name: 'Double Shawarma Chicken', price: 3.50 },
+      { name: 'Clay Oven Naan', price: 3.00 },
+      { name: 'Masala Fries Portion', price: 3.95 }
+    ]
+  },
+  {
+    id: 'vada-duo',
+    name: 'Artisanal Medu Vada (2 Pcs)',
+    category: 'all-day-breakfast',
+    price: '€6.50',
+    rawPrice: 6.50,
+    description: 'Golden-crisp savoury lentil doughnuts tempered with fresh ginger, cracked black pepper, and fresh curry leaves. Crunchy crust with an airy, pillowy centre.',
+    image: 'https://images.unsplash.com/photo-1589301760014-d929f3979dbc?auto=format&fit=crop&w=800&q=80',
+    tags: ['South Indian Classic'],
+    isSpicy: false,
+    isVeg: true,
+    isSignature: false,
+    pairing: 'Served with piping hot Sambar & Coconut Chutney',
+    customizable: true,
+    salads: ['Plain Crispy Medu Style', 'Perugu Vada (Whipped Spiced Yogurt Bath) (+€1.00)'],
+    sauces: ['Fresh Coconut Chutney', 'Allam (Ginger) Pachadi', 'Spiced Curd Seasoning'],
+    addons: [
+      { name: 'Extra Sambar Bowl', price: 1.50 },
+      { name: 'Gunpowder Podi & Ghee Dip', price: 1.50 }
+    ]
+  },
+  {
+    id: 'pesarattu-andhra',
+    name: 'Traditional Andhra Moong Pesarattu',
+    category: 'all-day-breakfast',
+    price: '€8.00',
+    rawPrice: 8.00,
+    description: 'Authentic whole green gram moong crepe crisp-roasted in ghee with cumin, finely chopped ginger, and green chillies. Served with traditional allam pachadi.',
+    image: 'https://images.unsplash.com/photo-1668236543090-82eba5ee5976?auto=format&fit=crop&w=800&q=80',
+    tags: ['Andhra Native', 'Protein Rich'],
+    isSpicy: true,
+    isVeg: true,
+    isSignature: true,
+    pairing: 'Essential pairing: Andhra Allam (Ginger) Pachadi',
+    customizable: true,
+    salads: ['Plain Green Moong', 'Spiced Onion Pesarattu (+€1.00)', 'MLA Upma Stuffed Pesarattu (+€2.00)'],
+    sauces: ['Andhra Allam Ginger Pachadi', 'Fresh Coconut Chutney', 'Traditional Lentil Sambar'],
+    addons: [
+      { name: 'Extra Allam Pachadi', price: 1.50 },
+      { name: 'Hot Ghee Drizzle', price: 1.00 }
+    ]
+  },
+
+  // NAATU SPECIALS (RRR & JR NTR CULTURAL INSPIRATION)
+  {
+    id: 'komaram-bheem-mutton',
+    name: 'Komaram Bheem Smoked Mutton Fry',
+    category: 'naatu-specials',
+    price: '€16.99',
+    rawPrice: 16.99,
+    description: 'Inspired by Jr NTR’s legendary warrior portrayal in RRR: Tender bone-in Irish mutton slow-roasted in heavy brass vessels with crushed black peppercorns, curry leaves, and sun-dried fiery chillies.',
+    image: 'https://images.unsplash.com/photo-1545247181-516773cae754?auto=format&fit=crop&w=800&q=80',
+    tags: ['RRR Tribute', 'Jr NTR Special', 'Fiery Desi'],
+    isSpicy: true,
+    isVeg: false,
+    isSignature: true,
+    pairing: 'Exceptional with Tandoori Butter Naan or Jeera Rice',
+    customizable: false
+  },
+  {
+    id: 'young-tiger-wings',
+    name: 'Young Tiger Fiery Naatu Wings',
+    category: 'naatu-specials',
+    price: '€9.99',
+    rawPrice: 9.99,
+    description: 'Crisp chicken wings charred in the live clay tandoor, then flash-tossed in our signature fiery Naatu glaze with tamarind pulp, cracked cumin, and red chillies.',
+    image: 'https://images.unsplash.com/photo-1527477321055-436158a2b00d?auto=format&fit=crop&w=800&q=80',
+    tags: ['NTR Fan Favorite', 'Live Fire'],
+    isSpicy: true,
+    isVeg: false,
+    isSignature: true,
+    pairing: 'Served with cooling garlic mint dip',
+    customizable: false
+  },
+  {
+    id: 'rayalaseema-kodi-pulao',
+    name: 'Rayalaseema Naatu Kodi Pulao',
+    category: 'naatu-specials',
+    price: '€15.99',
+    rawPrice: 15.99,
+    description: 'Authentic countryside chicken pulao cooked with aged seeraga samba rice, shallots, crushed green chillies, and whole pod spices in rustic village style.',
+    image: 'https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=800&q=80',
+    tags: ['Naatu Kodi', 'Rustic Village'],
+    isSpicy: true,
+    isVeg: false,
+    isSignature: true,
+    pairing: 'Served with spiced onion raita & lemon wedge',
+    customizable: false
+  },
+
+  // WOK SNACKS (HIGH HEAT INDO-CHINESE)
+  {
+    id: 'chilli-chicken-wok',
+    name: 'Desi Wok Chilli Chicken',
+    category: 'wok-snacks',
+    price: '€11.99',
+    rawPrice: 11.99,
+    description: 'Crispy batter-fried chicken chunks tossed in a smoking wok with diced bell peppers, spring onions, green chillies, and savory garlic soy glaze.',
+    image: 'https://images.unsplash.com/photo-1562967914-608f82629710?auto=format&fit=crop&w=800&q=80',
+    tags: ['Wok Tossed', 'Indo-Chinese'],
+    isSpicy: true,
+    isVeg: false,
+    isSignature: false,
+    pairing: 'Perfect starter with cold craft beverages',
+    customizable: false
+  },
+  {
+    id: 'apollo-fish-wok',
+    name: 'Hyderabadi Apollo Fish',
+    category: 'wok-snacks',
+    price: '€12.99',
+    rawPrice: 12.99,
+    description: 'Boneless fish fillets marinated with ginger-garlic, flash-fried in the wok, and tempered with fresh curry leaves, green chillies, and spiced yogurt reduction.',
+    image: 'https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&w=800&q=80',
+    tags: ['Hyderabad Street Classic'],
+    isSpicy: true,
+    isVeg: false,
+    isSignature: true,
+    pairing: 'Garnished with fresh coriander & lime',
+    customizable: false
+  },
+  {
+    id: 'crispy-gobi-65',
+    name: 'Crispy Wok Gobi 65',
+    category: 'wok-snacks',
+    price: '€9.50',
+    rawPrice: 9.50,
+    description: 'Tender cauliflower florets coated in spiced batter, fried golden, and tossed with crispy curry leaves, garlic flakes, and roasted cumin.',
+    image: 'https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=800&q=80',
+    tags: ['Vegetarian', 'Crunchy Starter'],
+    isSpicy: true,
+    isVeg: true,
+    isSignature: false,
+    pairing: 'Served with sweet and sour dipping relish',
+    customizable: false
+  },
+
+  // CHARCOAL GRILLS, BIRYANIS & CURRIES
   {
     id: 'sultan-kebab',
     name: 'Sultan Kebab Platter',
@@ -527,10 +868,15 @@ function initMenuFilters() {
   // Category Tab Click
   categoryButtons.forEach(btn => {
     btn.addEventListener('click', () => {
-      categoryButtons.forEach(b => b.classList.remove('active'));
+      categoryButtons.forEach(b => {
+        b.classList.remove('active');
+        b.setAttribute('aria-selected', 'false');
+      });
       btn.classList.add('active');
+      btn.setAttribute('aria-selected', 'true');
       activeCategory = btn.dataset.category || 'all';
       renderMenu();
+      btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
     });
   });
 
@@ -554,16 +900,66 @@ function initMenuFilters() {
 
   // Initial render
   renderMenu();
+  initCategoryNavScroll();
+}
+
+function initCategoryNavScroll() {
+  const scrollContainer = document.getElementById('menuCategoriesScroll');
+  const prevBtn = document.getElementById('catNavPrev');
+  const nextBtn = document.getElementById('catNavNext');
+  const fadeLeft = document.getElementById('catFadeLeft');
+  const fadeRight = document.getElementById('catFadeRight');
+
+  if (!scrollContainer) return;
+
+  function updateNavState() {
+    const maxScroll = Math.max(0, scrollContainer.scrollWidth - scrollContainer.clientWidth);
+    const currentScroll = scrollContainer.scrollLeft;
+
+    if (prevBtn) {
+      prevBtn.disabled = currentScroll <= 6;
+    }
+
+    if (nextBtn) {
+      nextBtn.disabled = currentScroll >= maxScroll - 6;
+    }
+
+    if (fadeLeft) {
+      fadeLeft.classList.toggle('is-visible', currentScroll > 12);
+    }
+
+    if (fadeRight) {
+      fadeRight.classList.toggle('is-visible', currentScroll < maxScroll - 12);
+    }
+  }
+
+  if (prevBtn) {
+    prevBtn.addEventListener('click', () => {
+      scrollContainer.scrollBy({ left: -260, behavior: 'smooth' });
+    });
+  }
+
+  if (nextBtn) {
+    nextBtn.addEventListener('click', () => {
+      scrollContainer.scrollBy({ left: 260, behavior: 'smooth' });
+    });
+  }
+
+  scrollContainer.addEventListener('scroll', updateNavState, { passive: true });
+  window.addEventListener('resize', updateNavState, { passive: true });
+
+  // Initial check after DOM paint
+  setTimeout(updateNavState, 150);
 }
 
 /* ==========================================================================
-   3B. ORDER SERVICE STATE & CART MANAGEMENT
+   3B. ORDER SERVICE STATE & CART MANAGEMENT (UNINTERRUPTED FLOW)
    ========================================================================== */
 const orderState = {
   fulfillment: 'collection', // 'collection' or 'delivery'
   storeName: "Naatu Newbridge",
   storeAddress: 'Unit 3, Limerick Lane, Newbridge, Co. Kildare, W12 R274',
-  hasConfirmedMode: false
+  hasConfirmedMode: true
 };
 
 const orderCart = {};
@@ -580,11 +976,7 @@ function handleDishAction(dishId) {
   const item = MENU_ITEMS.find(m => m.id === dishId);
   if (!item) return;
 
-  if (!orderState.hasConfirmedMode) {
-    openServiceModeModal(() => handleDishAction(dishId));
-    return;
-  }
-
+  // Let user customize or add items directly without gatekeeping modal
   if (item.customizable) {
     openItemCustomizer(item);
   } else {
@@ -750,10 +1142,8 @@ function attachDishCardListeners() {
    3C. SERVICE MODE MODAL (COLLECT VS. DELIVERY)
    ========================================================================== */
 function openServiceModeModal(actionAfterConfirm = null) {
-  pendingOrderAction = actionAfterConfirm;
-  const modal = document.getElementById('serviceModeModal');
-  if (modal) {
-    openModal(modal);
+  if (typeof actionAfterConfirm === 'function') {
+    actionAfterConfirm();
   }
 }
 
@@ -846,7 +1236,25 @@ function openItemCustomizer(item) {
 function renderCustomizerOptions() {
   if (!currentCustomizingItem) return;
 
-  // 1. Salads (Checkbox style, up to 4)
+  const isBreakfast = currentCustomizingItem.category === 'all-day-breakfast';
+  const group1Header = document.querySelector('#modGroupSalads .modifier-group-header h4');
+  const group2Header = document.querySelector('#modGroupSauces .modifier-group-header h4');
+  const group3Header = document.querySelector('#modGroupAddons .modifier-group-header h4');
+
+  if (group1Header) {
+    group1Header.textContent = isBreakfast ? '1. Choose Variation / Filling' : '1. Choose Fresh Salads';
+  }
+  if (group2Header) {
+    group2Header.innerHTML = isBreakfast ? '2. Choose Fresh Chutney / Sauce <span class="required-star">*</span>' : '2. Choose House Sauce <span class="required-star">*</span>';
+  }
+  if (group3Header) {
+    group3Header.textContent = isBreakfast ? '3. Optional Sides & Add-ons' : '3. Optional Add-ons & Sides';
+  }
+
+  const checkSvg = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>`;
+  const dotSvg = `<svg width="8" height="8" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="12" r="10"/></svg>`;
+
+  // 1. Variations / Salads
   const saladsList = document.getElementById('saladOptionsList');
   if (saladsList && currentCustomizingItem.salads) {
     saladsList.innerHTML = currentCustomizingItem.salads.map(salad => {
@@ -854,7 +1262,7 @@ function renderCustomizerOptions() {
       return `
         <button type="button" class="mod-card ${isSelected ? 'selected' : ''}" data-salad="${salad}">
           <div class="mod-card-label">
-            <span class="mod-card-icon">${isSelected ? '✓' : ''}</span>
+            <span class="mod-card-icon">${isSelected ? checkSvg : ''}</span>
             <span>${salad}</span>
           </div>
         </button>
@@ -868,7 +1276,7 @@ function renderCustomizerOptions() {
           selectedSalads = selectedSalads.filter(s => s !== salad);
         } else {
           if (selectedSalads.length >= 4) {
-            showToast('You can choose up to 4 fresh salads');
+            showToast('You can choose up to 4 selections');
             return;
           }
           selectedSalads.push(salad);
@@ -878,7 +1286,7 @@ function renderCustomizerOptions() {
     });
   }
 
-  // 2. Sauces (Radio style, select 1)
+  // 2. Chutneys / Sauces (Radio style, select 1)
   const saucesList = document.getElementById('sauceOptionsList');
   if (saucesList && currentCustomizingItem.sauces) {
     saucesList.innerHTML = currentCustomizingItem.sauces.map(sauce => {
@@ -886,7 +1294,7 @@ function renderCustomizerOptions() {
       return `
         <button type="button" class="mod-card is-radio ${isSelected ? 'selected' : ''}" data-sauce="${sauce}">
           <div class="mod-card-label">
-            <span class="mod-card-icon">${isSelected ? '●' : ''}</span>
+            <span class="mod-card-icon">${isSelected ? dotSvg : ''}</span>
             <span>${sauce}</span>
           </div>
         </button>
@@ -909,7 +1317,7 @@ function renderCustomizerOptions() {
       return `
         <button type="button" class="mod-card ${isSelected ? 'selected' : ''}" data-addon="${addon.name}">
           <div class="mod-card-label">
-            <span class="mod-card-icon">${isSelected ? '✓' : ''}</span>
+            <span class="mod-card-icon">${isSelected ? checkSvg : ''}</span>
             <span>${addon.name}</span>
           </div>
           <span class="mod-card-price">+€${addon.price.toFixed(2)}</span>
@@ -1047,10 +1455,16 @@ function initModals() {
   orderNowButtons.forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.preventDefault();
-      if (!orderState.hasConfirmedMode) {
-        openServiceModeModal(() => openOrderModal());
-      } else {
+      if (Object.keys(orderCart).length > 0) {
         openOrderModal();
+      } else {
+        const menuEl = document.getElementById('menu');
+        if (menuEl) {
+          menuEl.scrollIntoView({ behavior: 'smooth' });
+          showToast('Select your dishes to start your order');
+        } else {
+          openOrderModal();
+        }
       }
     });
   });
@@ -1123,13 +1537,15 @@ function initModals() {
   if (externalBookingForm) {
     externalBookingForm.addEventListener('submit', (e) => {
       e.preventDefault();
-      const partySize = document.getElementById('resPartySize').value;
+      const partySizeSelect = document.getElementById('resPartySize');
+      const partySize = partySizeSelect ? partySizeSelect.value : '2';
+      const guestText = partySize === '1' ? '1 guest' : `${partySize} guests`;
       const resDate = document.getElementById('resDate').value;
       const resTime = document.getElementById('resTime').value;
       const resName = document.getElementById('resName').value;
       const resPhone = document.getElementById('resPhone').value;
 
-      showToast(`Reservation request received for ${partySize} guests! Our host will phone ${resPhone} to confirm.`);
+      showToast(`Reservation request received for ${guestText}! Our host will phone ${resPhone} to confirm.`);
       closeAllModals();
       externalBookingForm.reset();
     });
@@ -1442,7 +1858,9 @@ function showToast(message) {
         </svg>
       </div>
       <div class="toast-message-text" id="toastMessageText"></div>
-      <button type="button" class="toast-dismiss-btn" id="toastDismissBtn" aria-label="Dismiss alert">✕</button>
+      <button type="button" class="toast-dismiss-btn" id="toastDismissBtn" aria-label="Dismiss alert">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
     `;
     document.body.appendChild(toast);
 
