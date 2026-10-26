@@ -1,6 +1,6 @@
-# Lezzetli Design System & Developer Specification
+# Naatu Design System & Developer Specification
 
-**Product Name:** Lezzetli — Authentic Middle Eastern Charcoal Grills & Desi Cuisine  
+**Product Name:** Naatu — Authentic Indian Fine Dining  
 **Physical Restaurant:** Unit 3, Limerick Lane, Newbridge, Co. Kildare, Ireland (045 494056)  
 **Online Platform:** Interactive Single-Page Application (HTML5, Vanilla CSS3, Vanilla ES6+ JavaScript)  
 **Design Version:** 2.5 (High-Contrast AAA Light Mode, Native Mobile Bottom Sheets, Gesture Dismiss)
@@ -9,7 +9,7 @@
 
 ## 1. Cultural Design Philosophy & Visual Tone
 
-Lezzetli bridges centuries-old Mughal and Ottoman hospitality with contemporary Irish dining speed:
+Naatu bridges centuries-old royal Indian culinary craft and live-fire theatre with contemporary fine dining elegance:
 
 1. **The Spice Palette:** Natural culinary hues—saffron gold, charred charcoal embers, roasted cardamom, fresh coriander herbal green, and tandoori crimson.
 2. **Dual-Theme Dining:**

@@ -1,6 +1,6 @@
 /* ==========================================================================
-   NAVEEN'S KITCHEN LEZZETLI RESTAURANT — DESIGN SYSTEM & MASTER STYLESHEET
-   Middle Eastern Charcoal Grills & Authentic Desi Cuisine (Newbridge, Ireland)
+   NAATU RESTAURANT — DESIGN SYSTEM & MASTER STYLESHEET
+   Authentic Indian Fine Dining (Newbridge, Co. Kildare, Ireland)
    ========================================================================== */
 
 /* 1. GOOGLE FONTS IMPORT */
@@ -389,7 +389,23 @@ button {
 .brand-logo {
   display: flex;
   align-items: center;
-  gap: 0.7rem;
+  gap: 0.75rem;
+  text-decoration: none;
+}
+
+.brand-logo-img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 12px rgba(212, 154, 61, 0.35));
+  transition: transform var(--duration-fast) ease, filter var(--duration-fast) ease;
+  flex-shrink: 0;
+}
+
+.brand-logo:hover .brand-logo-img {
+  transform: scale(1.05);
+  filter: drop-shadow(0 6px 18px rgba(212, 154, 61, 0.55));
 }
 
 .brand-emblem {
@@ -423,22 +439,23 @@ button {
 
 .brand-title {
   font-family: var(--font-display);
-  font-size: 0.95rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
+  font-size: 1.125rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
   color: var(--text-primary);
-  line-height: 1.15;
+  line-height: 1.1;
   white-space: nowrap;
 }
 
 .brand-subtitle {
   font-family: var(--font-body); /* Outfit */
-  font-size: 0.68rem;
+  font-size: 0.62rem;
   color: var(--gold-primary);
   font-weight: 600;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   line-height: 1.15;
+  white-space: nowrap;
 }
 
 [data-theme="light"] .brand-subtitle {
@@ -1647,7 +1664,7 @@ html[data-theme="light"] .dish-card:hover .dish-price-badge,
   color: var(--text-muted);
 }
 
-/* 13B. LEZZETLI MOBILE APP DOWNLOAD SECTION */
+/* 13B. NAATU MOBILE APP DOWNLOAD SECTION */
 .app-download-section {
   padding: 5rem 0;
   position: relative;
@@ -1835,12 +1852,20 @@ html[data-theme="light"] .dish-card:hover .dish-price-badge,
 .phone-app-logo {
   display: flex;
   align-items: center;
-  gap: 0.35rem;
+  gap: 0.4rem;
   font-family: var(--font-display);
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   font-weight: 700;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.05em;
   color: var(--gold-light);
+}
+
+.phone-app-logo-img {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  object-fit: contain;
+  flex-shrink: 0;
 }
 
 .phone-badge {
@@ -3261,6 +3286,7 @@ img.img-lazy-reveal.img-loaded {
 /* ==========================================================================
    19. RESPONSIVE TOAST NOTIFICATIONS (TOP-RIGHT DESKTOP / TOP-SLIDE MOBILE)
    ========================================================================== */
+.naatu-toast,
 .lezzetli-toast {
   position: fixed;
   top: 28px;
@@ -3292,6 +3318,7 @@ img.img-lazy-reveal.img-loaded {
   cursor: grab;
 }
 
+.naatu-toast.visible,
 .lezzetli-toast.visible {
   opacity: 1;
   visibility: visible;
@@ -3299,11 +3326,13 @@ img.img-lazy-reveal.img-loaded {
   pointer-events: auto;
 }
 
+.naatu-toast.is-dragging,
 .lezzetli-toast.is-dragging {
   transition: none !important;
   cursor: grabbing;
 }
 
+.naatu-toast.slide-out-left,
 .lezzetli-toast.slide-out-left {
   transform: translateX(-140%) !important;
   opacity: 0 !important;
@@ -3311,6 +3340,7 @@ img.img-lazy-reveal.img-loaded {
   pointer-events: none !important;
 }
 
+.naatu-toast.slide-out-right,
 .lezzetli-toast.slide-out-right {
   transform: translateX(140%) !important;
   opacity: 0 !important;
@@ -3318,6 +3348,7 @@ img.img-lazy-reveal.img-loaded {
   pointer-events: none !important;
 }
 
+[data-theme="light"] .naatu-toast,
 [data-theme="light"] .lezzetli-toast {
   background: rgba(255, 255, 255, 0.96);
   border-color: rgba(138, 90, 20, 0.28);
@@ -3369,6 +3400,7 @@ img.img-lazy-reveal.img-loaded {
 
 /* Mobile Top-Sliding with Horizontal Swipe to Dismiss */
 @media (max-width: 768px) {
+  .naatu-toast,
   .lezzetli-toast {
     top: 16px;
     left: 16px;
@@ -3384,6 +3416,7 @@ img.img-lazy-reveal.img-loaded {
     gap: 0.6rem;
   }
 
+  .naatu-toast.visible,
   .lezzetli-toast.visible {
     transform: translateY(0);
   }
@@ -4233,16 +4266,25 @@ img.img-lazy-reveal.img-loaded {
 }
 
 .curtain-emblem {
-  width: 54px;
-  height: 54px;
-  color: var(--gold-primary);
-  filter: drop-shadow(0 0 20px rgba(212, 154, 61, 0.6));
+  width: 72px;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0 0 24px rgba(212, 154, 61, 0.65));
   animation: curtainEmblemPulse 0.9s ease-in-out infinite alternate;
 }
 
+.curtain-logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 50%;
+}
+
 @keyframes curtainEmblemPulse {
-  0% { transform: scale(0.95); filter: drop-shadow(0 0 10px rgba(212, 154, 61, 0.35)); }
-  100% { transform: scale(1.05); filter: drop-shadow(0 0 24px rgba(212, 154, 61, 0.75)); }
+  0% { transform: scale(0.95); filter: drop-shadow(0 0 12px rgba(212, 154, 61, 0.4)); }
+  100% { transform: scale(1.05); filter: drop-shadow(0 0 28px rgba(212, 154, 61, 0.8)); }
 }
 
 .curtain-brand {

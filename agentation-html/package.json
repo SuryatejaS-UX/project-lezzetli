@@ -1,0 +1,23 @@
+{
+  "name": "agentation-html",
+  "version": "1.0.0",
+  "description": "Zero-dependency visual feedback and element commenting tool for HTML web apps and AI coding agents",
+  "main": "agentation.js",
+  "scripts": {
+    "test": "node --check agentation.js",
+    "serve": "npx serve ."
+  },
+  "keywords": [
+    "agentation",
+    "visual-feedback",
+    "ai-agent",
+    "antigravity",
+    "cursor",
+    "claude-code",
+    "element-annotator",
+    "css-selector",
+    "shadow-dom"
+  ],
+  "author": "Project Sutra",
+  "license": "MIT"
+}

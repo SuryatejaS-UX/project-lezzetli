@@ -1,5 +1,5 @@
 /**
- * NAVEEN'S KITCHEN LEZZETLI RESTAURANT — CORE APPLICATION LOGIC
+ * NAATU RESTAURANT — CORE APPLICATION LOGIC
  * High-performance vanilla JS powering interactions, theme switching, 
  * menu filtering, external booking handoff, and live opening hour calculations.
  */
@@ -21,7 +21,7 @@ function initTheme() {
   const drawerThemeToggleBtn = document.getElementById('drawerThemeToggleBtn');
   
   // 1. Check localStorage or system preference
-  const savedTheme = localStorage.getItem('lezzetli-theme');
+  const savedTheme = localStorage.getItem('naatu-theme') || localStorage.getItem('lezzetli-theme');
   const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
   
   const initialTheme = savedTheme ? savedTheme : (prefersDark ? 'dark' : 'dark'); // Default dark for luxury evening feel
@@ -31,7 +31,7 @@ function initTheme() {
     const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
     const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
     applyTheme(newTheme);
-    localStorage.setItem('lezzetli-theme', newTheme);
+    localStorage.setItem('naatu-theme', newTheme);
     showToast(`Switched to ${newTheme === 'dark' ? 'Evening Dining (Dark)' : 'Day Dining (Light)'} mode`);
   }
 
@@ -561,7 +561,7 @@ function initMenuFilters() {
    ========================================================================== */
 const orderState = {
   fulfillment: 'collection', // 'collection' or 'delivery'
-  storeName: "Naveen's Kitchen Lezzetli Newbridge",
+  storeName: "Naatu Newbridge",
   storeAddress: 'Unit 3, Limerick Lane, Newbridge, Co. Kildare, W12 R274',
   hasConfirmedMode: false
 };
@@ -1426,11 +1426,11 @@ function initMobileNav() {
    6. RESPONSIVE TOAST NOTIFICATIONS & SWIPE-TO-DISMISS (TOP-RIGHT / TOP-SLIDE)
    ========================================================================== */
 function showToast(message) {
-  let toast = document.getElementById('lezzetliToast');
+  let toast = document.getElementById('naatuToast') || document.getElementById('lezzetliToast');
   if (!toast) {
     toast = document.createElement('div');
-    toast.id = 'lezzetliToast';
-    toast.className = 'lezzetli-toast';
+    toast.id = 'naatuToast';
+    toast.className = 'naatu-toast lezzetli-toast';
     toast.setAttribute('role', 'status');
     toast.setAttribute('aria-live', 'polite');
     toast.innerHTML = `

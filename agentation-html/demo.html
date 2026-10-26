@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agentation for HTML — Visual Commenting & Feedback Demo</title>
+  <meta name="description" content="Interactive demo of Agentation for HTML: zero-dependency visual element selection and annotation tool for AI coding agents.">
+
+  <!-- Fonts: Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --card-bg: #111827;
+      --card-border: #1f2937;
+      --text-main: #f9fafb;
+      --text-muted: #9ca3af;
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --accent: #8b5cf6;
+      --success: #10b981;
+      --danger: #ef4444;
+      --warning: #f59e0b;
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'JetBrains Mono', Consolas, monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      line-height: 1.6;
+      padding-bottom: 120px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Top Navigation Bar */
+    .demo-navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 32px;
+      background: rgba(17, 24, 39, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--card-border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .demo-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 18px;
+      color: #ffffff;
+      text-decoration: none;
+    }
+
+    .demo-logo-icon {
+      width: 28px;
+      height: 28px;
+      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+    }
+
+    .demo-nav-links {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      list-style: none;
+    }
+
+    .demo-nav-link {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: color 0.15s ease;
+    }
+    .demo-nav-link:hover, .demo-nav-link.active {
+      color: var(--text-main);
+    }
+
+    .demo-nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    /* Container */
+    .demo-container {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 40px 24px;
+    }
+
+    /* Banner / Hero */
+    .demo-hero {
+      text-align: center;
+      margin-bottom: 48px;
+      padding: 40px 20px;
+      background: radial-gradient(circle at 50% 20%, rgba(59, 130, 246, 0.12) 0%, transparent 70%);
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .demo-hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      background: rgba(59, 130, 246, 0.1);
+      border: 1px solid rgba(59, 130, 246, 0.25);
+      border-radius: 9999px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #60a5fa;
+      margin-bottom: 16px;
+    }
+
+    .demo-hero-title {
+      font-size: 40px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+      background: linear-gradient(180deg, #ffffff 40%, #94a3b8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .demo-hero-subtitle {
+      font-size: 18px;
+      color: var(--text-muted);
+      max-width: 680px;
+      margin: 0 auto 28px;
+    }
+
+    .demo-callout-box {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      background: rgba(17, 24, 39, 0.7);
+      border: 1px dashed #374151;
+      border-radius: 10px;
+      padding: 12px 20px;
+      max-width: 720px;
+      margin: 0 auto;
+      font-size: 13px;
+      color: #d1d5db;
+    }
+
+    .demo-kbd {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      background: #1f2937;
+      border: 1px solid #4b5563;
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #93c5fd;
+    }
+
+    /* Grid layout */
+    .demo-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+
+    .demo-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .demo-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .demo-card-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .demo-card-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* Buttons */
+    .demo-btn {
+      appearance: none;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.15s ease;
+      text-decoration: none;
+    }
+
+    .demo-btn-primary {
+      background: var(--primary);
+      color: #ffffff;
+    }
+    .demo-btn-primary:hover {
+      background: var(--primary-hover);
+    }
+
+    .demo-btn-secondary {
+      background: #1f2937;
+      color: #e5e7eb;
+      border: 1px solid #374151;
+    }
+    .demo-btn-secondary:hover {
+      background: #374151;
+      color: #ffffff;
+    }
+
+    .demo-btn-danger {
+      background: rgba(239, 68, 68, 0.15);
+      color: #ef4444;
+      border: 1px solid rgba(239, 68, 68, 0.3);
+    }
+    .demo-btn-danger:hover {
+      background: #ef4444;
+      color: #ffffff;
+    }
+
+    /* Form elements */
+    .demo-form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 14px;
+    }
+
+    .demo-label {
+      font-size: 12px;
+      font-weight: 500;
+      color: #d1d5db;
+    }
+
+    .demo-input, .demo-select {
+      background: #1f2937;
+      border: 1px solid #374151;
+      border-radius: 6px;
+      color: #f9fafb;
+      padding: 8px 12px;
+      font-size: 13px;
+      font-family: inherit;
+      outline: none;
+    }
+    .demo-input:focus, .demo-select:focus {
+      border-color: var(--primary);
+    }
+
+    /* Table */
+    .demo-table-wrapper {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 40px;
+    }
+
+    .demo-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 13px;
+    }
+
+    .demo-table th {
+      background: rgba(31, 41, 55, 0.5);
+      padding: 12px 16px;
+      font-weight: 600;
+      color: #9ca3af;
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    .demo-table td {
+      padding: 14px 16px;
+      border-bottom: 1px solid rgba(31, 41, 55, 0.5);
+      color: #e5e7eb;
+    }
+
+    .demo-badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 9999px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+    .demo-badge-success { background: rgba(16, 185, 129, 0.15); color: #34d399; }
+    .demo-badge-warning { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
+    .demo-badge-info { background: rgba(59, 130, 246, 0.15); color: #60a5fa; }
+
+    /* Code block */
+    .demo-code-box {
+      background: #090d16;
+      border: 1px solid #1f2937;
+      border-radius: 8px;
+      padding: 14px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: #93c5fd;
+      overflow-x: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navbar -->
+  <header class="demo-navbar">
+    <a href="#" class="demo-logo" id="main-brand-logo">
+      <div class="demo-logo-icon">✦</div>
+      <span>Project Sutra</span>
+    </a>
+
+    <nav>
+      <ul class="demo-nav-links">
+        <li><a href="#overview" class="demo-nav-link active" id="nav-overview">Overview</a></li>
+        <li><a href="#agents" class="demo-nav-link" id="nav-agents">Agents</a></li>
+        <li><a href="#tokens" class="demo-nav-link" id="nav-tokens">Tokens</a></li>
+        <li><a href="#settings" class="demo-nav-link" id="nav-settings">Settings</a></li>
+      </ul>
+    </nav>
+
+    <div class="demo-nav-actions">
+      <button class="demo-btn demo-btn-secondary" id="btn-quick-export">Export</button>
+      <button class="demo-btn demo-btn-primary" id="btn-new-run">New Agent Run</button>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="demo-container">
+
+    <!-- Hero Section -->
+    <section class="demo-hero" id="hero-section">
+      <div class="demo-hero-tag" id="hero-badge">
+        <span>✨ Visual Feedback Active</span>
+      </div>
+      <h1 class="demo-hero-title" id="hero-heading">Inspect, Comment & Guide AI Agents</h1>
+      <p class="demo-hero-subtitle" id="hero-subtext">
+        Click any element on this page to leave precision comments, capture CSS selectors and computed styles, and generate structured prompts for Antigravity, Cursor, or Claude Code.
+      </p>
+
+      <div class="demo-callout-box" id="demo-shortcut-callout">
+        <span><kbd class="demo-kbd">Alt + C</kbd> Inspect Element</span>
+        <span>•</span>
+        <span><kbd class="demo-kbd">Alt + H</kbd> Hide for Snapshot</span>
+        <span>•</span>
+        <span><kbd class="demo-kbd">Ctrl + Shift + C</kbd> Copy for AI</span>
+        <span>•</span>
+        <span>Esc to cancel</span>
+      </div>
+    </section>
+
+    <!-- Cards Grid -->
+    <div class="demo-grid-3">
+      
+      <!-- Card 1 -->
+      <div class="demo-card" id="card-business-agent">
+        <div class="demo-card-header">
+          <h3 class="demo-card-title">Business Analysis Agent</h3>
+          <span class="demo-badge demo-badge-success">Active</span>
+        </div>
+        <p class="demo-card-desc">
+          Automates market sizing, competitive intelligence, and financial metrics extraction from live documents.
+        </p>
+        <div class="demo-code-box">
+          status: ready | model: gemini-pro
+        </div>
+        <div style="display: flex; gap: 8px; margin-top: auto;">
+          <button class="demo-btn demo-btn-primary" id="btn-run-analysis" style="flex: 1;">Run Analysis</button>
+          <button class="demo-btn demo-btn-secondary" id="btn-edit-agent">Configure</button>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="demo-card" id="card-anomaly-agent">
+        <div class="demo-card-header">
+          <h3 class="demo-card-title">Anomaly Detection</h3>
+          <span class="demo-badge demo-badge-warning">Syncing</span>
+        </div>
+        <p class="demo-card-desc">
+          Monitors time-series data streams, detects sudden revenue drops, and flags unusual token consumption spikes.
+        </p>
+        <div class="demo-code-box">
+          threshold: 3.2σ | latency: 42ms
+        </div>
+        <div style="display: flex; gap: 8px; margin-top: auto;">
+          <button class="demo-btn demo-btn-secondary" id="btn-view-logs" style="flex: 1;">View Logs</button>
+          <button class="demo-btn demo-btn-danger" id="btn-stop-agent">Pause</button>
+        </div>
+      </div>
+
+      <!-- Card 3: Form Controls -->
+      <div class="demo-card" id="card-quick-config">
+        <div class="demo-card-header">
+          <h3 class="demo-card-title">Runtime Preferences</h3>
+          <span class="demo-badge demo-badge-info">Settings</span>
+        </div>
+        <div class="demo-form-group">
+          <label class="demo-label" for="select-model">Model Router</label>
+          <select class="demo-select" id="select-model">
+            <option value="gemini-2.5-pro">Gemini 2.5 Pro (Reasoning)</option>
+            <option value="gemini-2.5-flash">Gemini 2.5 Flash (Fast)</option>
+            <option value="claude-3.7-sonnet">Claude 3.7 Sonnet</option>
+          </select>
+        </div>
+        <div class="demo-form-group">
+          <label class="demo-label" for="input-max-tokens">Token Budget Limit</label>
+          <input type="number" class="demo-input" id="input-max-tokens" value="4096" placeholder="Max tokens">
+        </div>
+        <button class="demo-btn demo-btn-primary" id="btn-save-settings">Save Preferences</button>
+      </div>
+
+    </div>
+
+    <!-- Agent Activity Table -->
+    <div class="demo-table-wrapper" id="task-table-section">
+      <table class="demo-table" id="agent-tasks-table">
+        <thead>
+          <tr>
+            <th>Task Identifier</th>
+            <th>Target Agent</th>
+            <th>Execution Time</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr id="row-task-101">
+            <td style="font-family: var(--font-mono); font-size: 12px;">#TSK-8491</td>
+            <td>Q4 Financial Forecast Extraction</td>
+            <td>1.4s</td>
+            <td><span class="demo-badge demo-badge-success">Completed</span></td>
+            <td><button class="demo-btn demo-btn-secondary" style="padding: 4px 10px; font-size: 11px;" id="action-btn-101">Inspect Artifact</button></td>
+          </tr>
+          <tr id="row-task-102">
+            <td style="font-family: var(--font-mono); font-size: 12px;">#TSK-8492</td>
+            <td>Competitive Pricing Benchmark</td>
+            <td>4.8s</td>
+            <td><span class="demo-badge demo-badge-warning">In Progress</span></td>
+            <td><button class="demo-btn demo-btn-secondary" style="padding: 4px 10px; font-size: 11px;" id="action-btn-102">Live Stream</button></td>
+          </tr>
+          <tr id="row-task-103">
+            <td style="font-family: var(--font-mono); font-size: 12px;">#TSK-8493</td>
+            <td>Astryx Design Token Linter</td>
+            <td>0.6s</td>
+            <td><span class="demo-badge demo-badge-info">Queued</span></td>
+            <td><button class="demo-btn demo-btn-secondary" style="padding: 4px 10px; font-size: 11px;" id="action-btn-103">Cancel</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </main>
+
+  <!-- Load Agentation (Self-contained zero-dependency visual comment tool) -->
+  <script src="agentation.js"></script>
+</body>
+</html>
